@@ -60,15 +60,37 @@
       opacity: 0.95;
     }
 
-    .hero-btn {
-      display: inline-block;
-      background: #ffffff;
-      color: #0a4cff;
-      padding: 14px 26px;
-      border-radius: 8px;
-      font-weight: 700;
-      text-decoration: none;
-    }
+    .hero-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding: 14px 22px;
+  border-radius: 999px;              /* pill */
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  text-decoration:none;
+
+  background: rgba(255,255,255,0.92);
+  color: #0a4cff;
+
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.hero-btn:active{
+  transform: scale(0.98);
+}
+
+.hero-btn:hover{
+  background: rgba(255,255,255,1);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.28);
+}
+
 
     .hero-dots {
       position: absolute;
@@ -191,27 +213,78 @@
 
   <!-- SLIDER SCRIPT -->
   <script>
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.dot');
-    let current = 0;
+    <script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const hero = document.querySelector('.hero');
 
-    function showSlide(i) {
-      slides[current].classList.remove('active');
-      dots[current].classList.remove('active');
-      current = i;
-      slides[current].classList.add('active');
-      dots[current].classList.add('active');
-    }
+  let current = 0;
+  let timer = null;
+  const INTERVAL = 4500;
 
-    setInterval(() => {
+  function showSlide(i) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+
+    current = i;
+
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startAuto() {
+    stopAuto();
+    timer = setInterval(() => {
       showSlide((current + 1) % slides.length);
-    }, 4500);
+    }, INTERVAL);
+  }
 
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        showSlide(parseInt(dot.dataset.slide));
-      });
+  function stopAuto() {
+    if (timer) clearInterval(timer);
+    timer = null;
+  }
+
+  // Auto start
+  startAuto();
+
+  // Klik na tačkice (ručno prebacivanje)
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      showSlide(parseInt(dot.dataset.slide, 10));
+      startAuto(); // reset timer nakon klika
     });
+  });
+
+  // Pauza na dodir/hold (telefon)
+  hero.addEventListener('touchstart', stopAuto, { passive: true });
+  hero.addEventListener('touchend', startAuto, { passive: true });
+
+  // Pauza kad se drži miš (PC)
+  hero.addEventListener('mouseenter', stopAuto);
+  hero.addEventListener('mouseleave', startAuto);
+
+  // Swipe lijevo/desno (klijent sam prevlači)
+  let startX = 0;
+  hero.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+
+  hero.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const dx = endX - startX;
+
+    // prag da ne okida na mali dodir
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) {
+        showSlide((current + 1) % slides.length);     // swipe lijevo -> next
+      } else {
+        showSlide((current - 1 + slides.length) % slides.length); // swipe desno -> prev
+      }
+      startAuto();
+    }
+  }, { passive: true });
+</script>
+
   </script>
 
 </body>
