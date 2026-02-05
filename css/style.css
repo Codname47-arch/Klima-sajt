@@ -799,4 +799,31 @@ html {
   background:rgba(0,0,0,0.08);
   margin:6px 0;
 }
+/* =====================================================
+   SVG IKONICE U MENIJU
+   ===================================================== */
+.nav-menu a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.nav-menu .icon{
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  color:#111;           /* boja ikonice */
+}
+
+.nav-menu .icon path,
+.nav-menu .icon circle,
+.nav-menu .icon rect,
+.nav-menu .icon line,
+.nav-menu .icon polyline{
+  stroke: currentColor;
+}
+
+.nav-menu .icon-fill{
+  fill: currentColor;
+}
 
