@@ -1,328 +1,204 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ugradnja klima</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ugradnja klima</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background:#f5f6f8;
-      color:#111;
-    }
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f5f6f8;
+  color:#111;
+}
 
-    /* ===== HERO SLIDER (horizontalni) ===== */
-    .hero{
-      position:relative;
-      width:100%;
-      height:480px;
-      overflow:hidden;
-      background:#0a4cff;
-      -webkit-tap-highlight-color: transparent;
-    }
+/* ===== HERO ===== */
+.hero{
+  position:relative;
+  width:100%;
+  height:460px;
+  overflow:hidden;
+  background:#000;
+}
 
-    /* traka koja se pomjera */
-    .slides-track{
-      height:100%;
-      display:flex;
-      width:400%;                 /* 4 slajda */
-      transform: translateX(0%);
-      transition: transform 1.5s ease-in-out; /* sporija tranzicija */
-      will-change: transform;
-    }
+/* TRACK – BEZ width:400% (KLJUČNI FIX) */
+.slides-track{
+  display:flex;
+  height:100%;
+  transition: transform 1.5s ease-in-out;
+}
 
-    .slide{
-      position:relative;
-      flex: 0 0 100%;
-      height:100%;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+/* SVAKI SLAJD JE TAČNO ŠIRINE EKRANA */
+.slide{
+  min-width:100%;
+  height:100%;
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
 
-    /* overlay da se tekst vidi (NE SMIJE PREKRITI TEKST) */
-    .overlay{
-      position:absolute;
-      inset:0;
-      background: rgba(0,0,0,0.55);
-      z-index: 1;
-    }
+/* overlay */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  z-index:1;
+}
 
-    /* tekst kao prije */
-    .hero-content{
-      position:relative;
-      z-index: 2; /* BITNO da bude iznad overlay-a */
-      max-width: 900px;
-      margin:0 auto;
-      padding: 90px 18px;
-      text-align:center;
-      color:#fff;
-    }
+/* tekst – NORMALAN */
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:900px;
+  margin:0 auto;
+  padding:90px 18px;
+  text-align:center;
+  color:#fff;
+}
 
-    .hero-content h1{
-      font-size: 32px;
-      font-weight: 900;
-      line-height: 1.12;
-      margin: 0 0 14px 0;
-      text-shadow: 0 8px 20px rgba(0,0,0,0.35);
-    }
+.hero-content h1{
+  font-size:32px;
+  font-weight:900;
+  margin:0 0 14px;
+}
 
-    .hero-content p{
-      font-size: 17px;
-      line-height: 1.4;
-      margin: 0 0 26px 0;
-      opacity: 0.95;
-      text-shadow: 0 8px 20px rgba(0,0,0,0.30);
-    }
+.hero-content p{
+  font-size:17px;
+  margin:0 0 26px;
+}
 
-    /* moderniji CTA button */
-    .hero-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 14px 22px;
-      border-radius: 999px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      text-decoration:none;
+/* dugme */
+.hero-btn{
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:999px;
+  background:#fff;
+  color:#0a4cff;
+  font-weight:800;
+  text-decoration:none;
+}
 
-      background: rgba(255,255,255,0.92);
-      color: #0a4cff;
+/* tačkice */
+.hero-dots{
+  position:absolute;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:5;
+}
 
-      border: 1px solid rgba(255,255,255,0.55);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.5);
+}
 
-      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
+.dot.active{
+  background:#fff;
+}
 
-    .hero-btn:hover{
-      background: rgba(255,255,255,1);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.28);
-    }
+/* ===== PONUDA ===== */
+#ponuda{
+  padding:40px 18px;
+  max-width:1100px;
+  margin:auto;
+}
 
-    .hero-btn:active{
-      transform: scale(0.98);
-    }
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  max-width:320px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.08);
+}
 
-    /* tačkice */
-    .hero-dots{
-      position:absolute;
-      bottom: 16px;
-      left:50%;
-      transform: translateX(-50%);
-      display:flex;
-      gap:10px;
-      z-index: 5;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .hero-dots .dot{
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.55);
-      cursor:pointer;
-    }
-
-    .hero-dots .dot.active{
-      background: rgba(255,255,255,0.95);
-    }
-
-    /* ===== PONUDA ===== */
-    #ponuda{
-      padding: 40px 18px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .ponuda-title{
-      font-size: 22px;
-      font-weight: 900;
-      margin: 0 0 16px 0;
-    }
-
-    .cards{
-      display:flex;
-      gap:16px;
-      flex-wrap: wrap;
-    }
-
-    .card{
-      background:#fff;
-      border-radius: 12px;
-      padding: 18px;
-      width: 320px;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
-    }
-
-    .card h2{
-      margin: 0 0 8px 0;
-      font-size: 20px;
-    }
-
-    .card p{
-      margin: 8px 0;
-      color:#222;
-    }
-
-    .card a{
-      display:inline-block;
-      margin-top: 10px;
-      color:#0a4cff;
-      font-weight: 900;
-      text-decoration:none;
-    }
-
-    /* MOBILE */
-    @media (max-width: 768px){
-      .hero{ height: 420px; }
-      .hero-content{ padding: 78px 16px; }
-      .hero-content h1{ font-size: 26px; }
-      .hero-content p{ font-size: 15px; }
-      .card{ width: 100%; }
-    }
-  </style>
+@media(max-width:768px){
+  .hero{height:420px;}
+  .hero-content h1{font-size:26px;}
+  .hero-content p{font-size:15px;}
+}
+</style>
 </head>
 
 <body>
 
-  <!-- HERO SLIDER -->
-  <section class="hero">
-    <div class="slides-track" id="slidesTrack">
+<section class="hero">
+  <div class="slides-track" id="track">
 
-      <div class="slide" style="background-image:url('hero1.jpg')">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Profesionalna ugradnja klima sa fiskalnim računom</h1>
-          <p>Legalna usluga • Garancija na ugradnju • Pouzdani partneri</p>
-          <a href="#ponuda" class="hero-btn">Pogledaj ponudu →</a>
-        </div>
-      </div>
-
-      <div class="slide" style="background-image:url('hero2.jpg')">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Servis i podrška u roku od 24 sata</h1>
-          <p>Brza reakcija • Bez čekanja • Sigurnost nakon ugradnje</p>
-          <a href="#ponuda" class="hero-btn">Kako funkcioniše servis →</a>
-        </div>
-      </div>
-
-      <div class="slide" style="background-image:url('hero3.jpg')">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Program lojalnosti i nagrade za preporuke</h1>
-          <p>Preporuči • Ostvari pogodnosti • Uštedi na narednim uslugama</p>
-          <a href="#ponuda" class="hero-btn">Kako ostvariti pogodnosti →</a>
-        </div>
-      </div>
-
-      <div class="slide" style="background-image:url('hero4.jpg')">
-        <div class="overlay"></div>
-        <div class="hero-content">
-          <h1>Bez skrivenih troškova i nejasnih cijena</h1>
-          <p>Jasan dogovor unaprijed • Nema iznenađenja</p>
-          <a href="#ponuda" class="hero-btn">Naša ponuda →</a>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="hero-dots" aria-label="Navigacija slajdera">
-      <span class="dot active" data-slide="0"></span>
-      <span class="dot" data-slide="1"></span>
-      <span class="dot" data-slide="2"></span>
-      <span class="dot" data-slide="3"></span>
-    </div>
-  </section>
-
-  <!-- PONUDA -->
-  <section id="ponuda">
-    <h2 class="ponuda-title">Ponuda klima</h2>
-
-    <div class="cards">
-      <div class="card">
-        <h2>Tesla Inverter 12</h2>
-        <p>Grijanje do -15°C • Inverter • Tih rad</p>
-        <p><strong>Informativna cijena: 750 KM</strong></p>
-        <!-- ako ti je fajl Tesla12.html, promijeni u Tesla12.html -->
-        <a href="tesla12.html">Detalji & upit</a>
+    <div class="slide" style="background-image:url('hero1.jpg')">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Profesionalna ugradnja klima sa fiskalnim računom</h1>
+        <p>Legalna usluga • Garancija • Pouzdani partneri</p>
+        <a href="#ponuda" class="hero-btn">Pogledaj ponudu</a>
       </div>
     </div>
-  </section>
 
-  <!-- SCRIPT -->
-  <script>
-    const track = document.getElementById('slidesTrack');
-    const dots = document.querySelectorAll('.dot');
-    const hero = document.querySelector('.hero');
+    <div class="slide" style="background-image:url('hero2.jpg')">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Servis u roku od 24 sata</h1>
+        <p>Brza reakcija • Sigurnost nakon ugradnje</p>
+        <a href="#ponuda" class="hero-btn">Kako funkcioniše servis</a>
+      </div>
+    </div>
 
-    let current = 0;
-    let timer = null;
+    <div class="slide" style="background-image:url('hero3.jpg')">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Program lojalnosti i preporuka</h1>
+        <p>Ostvari bodove i nagrade</p>
+        <a href="#ponuda" class="hero-btn">Saznaj više</a>
+      </div>
+    </div>
 
-    const SLIDE_TIME = 6000; // 6 sekundi po slajdu
+    <div class="slide" style="background-image:url('hero4.jpg')">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h1>Bez skrivenih troškova</h1>
+        <p>Jasan dogovor unaprijed</p>
+        <a href="#ponuda" class="hero-btn">Naša ponuda</a>
+      </div>
+    </div>
 
-    function goTo(i){
-      current = (i + 4) % 4;  // loop 4->1
-      track.style.transform = `translateX(-${current * 100}%)`;
+  </div>
 
-      dots.forEach(d => d.classList.remove('active'));
-      dots[current].classList.add('active');
-    }
+  <div class="hero-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</section>
 
-    function startAuto(){
-      stopAuto();
-      timer = setInterval(() => {
-        goTo(current + 1);
-      }, SLIDE_TIME);
-    }
+<section id="ponuda">
+  <div class="card">
+    <h2>Tesla Inverter 12</h2>
+    <p>Grijanje do -15°C • Inverter</p>
+    <strong>750 KM</strong><br>
+    <a href="tesla12.html">Detalji & upit</a>
+  </div>
+</section>
 
-    function stopAuto(){
-      if(timer) clearInterval(timer);
-      timer = null;
-    }
+<script>
+const track = document.getElementById('track');
+const dots = document.querySelectorAll('.dot');
+let index = 0;
 
-    // start
-    goTo(0);
-    startAuto();
+function goTo(i){
+  index = (i + dots.length) % dots.length;
+  track.style.transform = `translateX(-${index * 100}%)`;
+  dots.forEach(d=>d.classList.remove('active'));
+  dots[index].classList.add('active');
+}
 
-    // klik tačkice
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        goTo(parseInt(dot.dataset.slide, 10));
-        startAuto();
-      });
-    });
-
-    // pauza na hold / hover
-    hero.addEventListener('touchstart', stopAuto, { passive:true });
-    hero.addEventListener('touchend', startAuto, { passive:true });
-    hero.addEventListener('mouseenter', stopAuto);
-    hero.addEventListener('mouseleave', startAuto);
-
-    // swipe left/right
-    let startX = 0;
-    hero.addEventListener('touchstart', e => {
-      startX = e.touches[0].clientX;
-    }, { passive:true });
-
-    hero.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - startX;
-      if(Math.abs(dx) > 50){
-        if(dx < 0) goTo(current + 1);
-        else goTo(current - 1);
-        startAuto();
-      }
-    }, { passive:true });
-  </script>
+setInterval(()=>goTo(index+1),6000);
+</script>
 
 </body>
 </html>
