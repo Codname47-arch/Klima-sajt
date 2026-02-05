@@ -124,3 +124,17 @@ body{
   .hero-content h1{ font-size:26px; }
   .hero-content p{ font-size:15px; }
 }
+/* ===== SLIDER FIX – NE BRISATI ===== */
+.hero {
+  overflow: hidden;
+}
+
+.slides-track {
+  display: flex;
+  height: 100%;
+}
+
+.slide {
+  flex: 0 0 100%;
+}
+
