@@ -29,7 +29,7 @@
       display:flex;
       width:400%;                 /* 4 slajda */
       transform: translateX(0%);
-      transition: transform 0.6s ease;
+      transition: transform 1.5s ease-in-out; /* sporija tranzicija */
       will-change: transform;
     }
 
@@ -39,19 +39,21 @@
       height:100%;
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
     }
 
-    /* overlay da se tekst vidi */
+    /* overlay da se tekst vidi (NE SMIJE PREKRITI TEKST) */
     .overlay{
       position:absolute;
       inset:0;
       background: rgba(0,0,0,0.55);
+      z-index: 1;
     }
 
-    /* tekst kao prije (nije vertikalno centriran) */
+    /* tekst kao prije */
     .hero-content{
       position:relative;
-      z-index:2;
+      z-index: 2; /* BITNO da bude iznad overlay-a */
       max-width: 900px;
       margin:0 auto;
       padding: 90px 18px;
@@ -97,6 +99,7 @@
 
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .hero-btn:hover{
@@ -250,6 +253,7 @@
         <h2>Tesla Inverter 12</h2>
         <p>Grijanje do -15°C • Inverter • Tih rad</p>
         <p><strong>Informativna cijena: 750 KM</strong></p>
+        <!-- ako ti je fajl Tesla12.html, promijeni u Tesla12.html -->
         <a href="tesla12.html">Detalji & upit</a>
       </div>
     </div>
@@ -267,7 +271,7 @@
     const SLIDE_TIME = 6000; // 6 sekundi po slajdu
 
     function goTo(i){
-      current = (i + 4) % 4;
+      current = (i + 4) % 4;  // loop 4->1
       track.style.transform = `translateX(-${current * 100}%)`;
 
       dots.forEach(d => d.classList.remove('active'));
@@ -277,7 +281,7 @@
     function startAuto(){
       stopAuto();
       timer = setInterval(() => {
-        goTo(current + 1); // 4. -> 1.
+        goTo(current + 1);
       }, SLIDE_TIME);
     }
 
