@@ -1,152 +1,181 @@
 <!DOCTYPE html>
 <html lang="sr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ugradnja klima</title>
 
   <style>
-    body {
-      margin: 0;
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: #f5f6f8;
+      background:#f5f6f8;
+      color:#111;
     }
 
     /* ===== HERO SLIDER ===== */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 480px;
-      overflow: hidden;
+    .hero{
+      position:relative;
+      width:100%;
+      height:480px;
+      overflow:hidden;
+      background:#0a4cff;
     }
 
-    .slide {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      display: none;
+    .slide{
+      position:absolute;
+      inset:0;
+      background-size:cover;
+      background-position:center;
+      display:none;
     }
 
-    .slide.active {
-      display: block;
-    }
+    .slide.active{ display:block; }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
+    .overlay{
+      position:absolute;
+      inset:0;
       background: rgba(0,0,0,0.55);
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
+    .hero-content{
+      position:relative;
+      z-index:2;
       max-width: 900px;
-      margin: 0 auto;
-      padding: 90px 20px;
-      text-align: center;
-      color: #fff;
+      margin:0 auto;
+      padding: 90px 18px;
+      text-align:center;
+      color:#fff;
     }
 
-    .hero-content h1 {
+    .hero-content h1{
       font-size: 32px;
-      font-weight: 800;
-      margin-bottom: 14px;
+      font-weight: 900;
+      line-height: 1.12;
+      margin: 0 0 14px 0;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.35);
     }
 
-    .hero-content p {
+    .hero-content p{
       font-size: 17px;
-      margin-bottom: 26px;
+      line-height: 1.4;
+      margin: 0 0 26px 0;
       opacity: 0.95;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.30);
     }
 
+    /* Moderniji CTA button */
     .hero-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding: 14px 22px;
-  border-radius: 999px;              /* pill */
-  font-weight: 800;
-  letter-spacing: 0.2px;
-  text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      text-decoration:none;
 
-  background: rgba(255,255,255,0.92);
-  color: #0a4cff;
+      background: rgba(255,255,255,0.92);
+      color: #0a4cff;
 
-  border: 1px solid rgba(255,255,255,0.55);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
 
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-}
-
-.hero-btn:active{
-  transform: scale(0.98);
-}
-
-.hero-btn:hover{
-  background: rgba(255,255,255,1);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.28);
-}
-
-
-    .hero-dots {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 5;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .hero-dots .dot {
+    .hero-btn:hover{
+      background: rgba(255,255,255,1);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.28);
+    }
+
+    .hero-btn:active{
+      transform: scale(0.98);
+    }
+
+    .hero-dots{
+      position:absolute;
+      bottom: 16px;
+      left:50%;
+      transform: translateX(-50%);
+      display:flex;
+      gap:10px;
+      z-index:5;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hero-dots .dot{
       width: 11px;
       height: 11px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      cursor: pointer;
+      background: rgba(255,255,255,0.55);
+      cursor:pointer;
     }
 
-    .hero-dots .dot.active {
-      background: #ffffff;
+    .hero-dots .dot.active{
+      background: rgba(255,255,255,0.95);
     }
 
     /* ===== PONUDA ===== */
-    #ponuda {
-      padding: 40px 20px;
+    #ponuda{
+      padding: 40px 18px;
       max-width: 1100px;
-      margin: auto;
+      margin: 0 auto;
     }
 
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      max-width: 320px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .ponuda-title{
+      font-size: 22px;
+      font-weight: 900;
+      margin: 0 0 16px 0;
     }
 
-    .card h2 {
-      margin-top: 0;
+    .cards{
+      display:flex;
+      gap:16px;
+      flex-wrap: wrap;
     }
 
-    .card a {
-      color: #0a4cff;
-      font-weight: bold;
-      text-decoration: none;
+    .card{
+      background:#fff;
+      border-radius: 12px;
+      padding: 18px;
+      width: 320px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
     }
 
-    @media (max-width: 768px) {
-      .hero {
-        height: 420px;
-      }
+    .card h2{
+      margin: 0 0 8px 0;
+      font-size: 20px;
+    }
 
-      .hero-content h1 {
-        font-size: 26px;
-      }
+    .card p{
+      margin: 8px 0;
+      color:#222;
+    }
+
+    .card a{
+      display:inline-block;
+      margin-top: 10px;
+      color:#0a4cff;
+      font-weight: 900;
+      text-decoration:none;
+    }
+
+    .card a:active{ opacity: 0.8; }
+
+    /* MOBILE */
+    @media (max-width: 768px){
+      .hero{ height: 420px; }
+      .hero-content{ padding: 78px 16px; }
+      .hero-content h1{ font-size: 26px; }
+      .hero-content p{ font-size: 15px; }
+      .card{ width: 100%; }
     }
   </style>
 </head>
@@ -161,7 +190,7 @@
       <div class="hero-content">
         <h1>Profesionalna ugradnja klima sa fiskalnim računom</h1>
         <p>Legalna usluga • Garancija na ugradnju • Pouzdani partneri</p>
-        <a href="#ponuda" class="hero-btn">Pogledaj ponudu</a>
+        <a href="#ponuda" class="hero-btn">Pogledaj ponudu →</a>
       </div>
     </div>
 
@@ -170,7 +199,7 @@
       <div class="hero-content">
         <h1>Servis i podrška u roku od 24 sata</h1>
         <p>Brza reakcija • Bez čekanja • Sigurnost nakon ugradnje</p>
-        <a href="#ponuda" class="hero-btn">Kako funkcioniše servis</a>
+        <a href="#ponuda" class="hero-btn">Kako funkcioniše servis →</a>
       </div>
     </div>
 
@@ -179,7 +208,7 @@
       <div class="hero-content">
         <h1>Program lojalnosti i nagrade za preporuke</h1>
         <p>Preporuči • Ostvari pogodnosti • Uštedi na narednim uslugama</p>
-        <a href="#ponuda" class="hero-btn">Kako ostvariti pogodnosti</a>
+        <a href="#ponuda" class="hero-btn">Kako ostvariti pogodnosti →</a>
       </div>
     </div>
 
@@ -188,11 +217,11 @@
       <div class="hero-content">
         <h1>Bez skrivenih troškova i nejasnih cijena</h1>
         <p>Jasan dogovor unaprijed • Nema iznenađenja</p>
-        <a href="#ponuda" class="hero-btn">Naša ponuda</a>
+        <a href="#ponuda" class="hero-btn">Naša ponuda →</a>
       </div>
     </div>
 
-    <div class="hero-dots">
+    <div class="hero-dots" aria-label="Navigacija slajdera">
       <span class="dot active" data-slide="0"></span>
       <span class="dot" data-slide="1"></span>
       <span class="dot" data-slide="2"></span>
@@ -203,88 +232,89 @@
 
   <!-- PONUDA -->
   <section id="ponuda">
-    <div class="card">
-      <h2>Tesla Inverter 12</h2>
-      <p>Grijanje do -15°C • Inverter • Tih rad</p>
-      <p><strong>Informativna cijena: 750 KM</strong></p>
-      <a href="tesla12.html">Detalji & upit</a>
+    <h2 class="ponuda-title">Ponuda klima</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h2>Tesla Inverter 12</h2>
+        <p>Grijanje do -15°C • Inverter • Tih rad</p>
+        <p><strong>Informativna cijena: 750 KM</strong></p>
+
+        <!-- VAŽNO: ime fajla mora biti identično (velika/mala slova) -->
+        <a href="tesla12.html">Detalji & upit</a>
+      </div>
     </div>
   </section>
 
-  <!-- SLIDER SCRIPT -->
+  <!-- SLIDER SCRIPT: auto, pause on hold, dots, swipe -->
   <script>
-    <script>
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
-  const hero = document.querySelector('.hero');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const hero = document.querySelector('.hero');
 
-  let current = 0;
-  let timer = null;
-  const INTERVAL = 4500;
+    let current = 0;
+    let timer = null;
+    const INTERVAL = 4500;
 
-  function showSlide(i) {
-    slides[current].classList.remove('active');
-    dots[current].classList.remove('active');
+    function showSlide(i) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
 
-    current = i;
+      current = i;
 
-    slides[current].classList.add('active');
-    dots[current].classList.add('active');
-  }
-
-  function startAuto() {
-    stopAuto();
-    timer = setInterval(() => {
-      showSlide((current + 1) % slides.length);
-    }, INTERVAL);
-  }
-
-  function stopAuto() {
-    if (timer) clearInterval(timer);
-    timer = null;
-  }
-
-  // Auto start
-  startAuto();
-
-  // Klik na tačkice (ručno prebacivanje)
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      showSlide(parseInt(dot.dataset.slide, 10));
-      startAuto(); // reset timer nakon klika
-    });
-  });
-
-  // Pauza na dodir/hold (telefon)
-  hero.addEventListener('touchstart', stopAuto, { passive: true });
-  hero.addEventListener('touchend', startAuto, { passive: true });
-
-  // Pauza kad se drži miš (PC)
-  hero.addEventListener('mouseenter', stopAuto);
-  hero.addEventListener('mouseleave', startAuto);
-
-  // Swipe lijevo/desno (klijent sam prevlači)
-  let startX = 0;
-  hero.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  hero.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const dx = endX - startX;
-
-    // prag da ne okida na mali dodir
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) {
-        showSlide((current + 1) % slides.length);     // swipe lijevo -> next
-      } else {
-        showSlide((current - 1 + slides.length) % slides.length); // swipe desno -> prev
-      }
-      startAuto();
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
     }
-  }, { passive: true });
-</script>
 
+    function startAuto() {
+      stopAuto();
+      timer = setInterval(() => {
+        showSlide((current + 1) % slides.length);
+      }, INTERVAL);
+    }
+
+    function stopAuto() {
+      if (timer) clearInterval(timer);
+      timer = null;
+    }
+
+    // Start
+    startAuto();
+
+    // Dots click
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        showSlide(parseInt(dot.dataset.slide, 10));
+        startAuto();
+      });
+    });
+
+    // Pause on touch hold (mobile) + hover (desktop)
+    hero.addEventListener('touchstart', stopAuto, { passive: true });
+    hero.addEventListener('touchend', startAuto, { passive: true });
+    hero.addEventListener('mouseenter', stopAuto);
+    hero.addEventListener('mouseleave', startAuto);
+
+    // Swipe left/right
+    let startX = 0;
+
+    hero.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+
+    hero.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const dx = endX - startX;
+
+      if (Math.abs(dx) > 50) {
+        if (dx < 0) {
+          showSlide((current + 1) % slides.length);
+        } else {
+          showSlide((current - 1 + slides.length) % slides.length);
+        }
+        startAuto();
+      }
+    }, { passive: true });
   </script>
 
 </body>
