@@ -785,3 +785,18 @@ html {
     display:none;
   }
 }
+   /* =====================================================
+   NAV MENU – DODATNI STIL
+   ===================================================== */
+.nav-menu a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.menu-divider{
+  height:1px;
+  background:rgba(0,0,0,0.08);
+  margin:6px 0;
+}
+
