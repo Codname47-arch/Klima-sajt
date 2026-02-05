@@ -1,4 +1,12 @@
 (() => {
+      // FIX: spriječi browser da pamti anchor i skroluje na #ponuda/#onama pri ulasku
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  if (location.hash && location.hash !== "#hero") {
+    history.replaceState(null, "", location.pathname + location.search);
+    window.scrollTo(0, 0);
+  }
+
     // FIX: ne skrolaj automatski na #ponuda ili bilo koji hash pri ulasku
   if (window.location.hash && window.location.hash !== "#hero") {
     history.replaceState(null, "", window.location.pathname + window.location.search);
