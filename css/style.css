@@ -728,3 +728,60 @@ html {
     padding-top: 12px;
   }
 }
+   /* =====================================================
+   STICKY MOBILE BAR (TELEFON)
+   ===================================================== */
+.mobile-bar{
+  display:none;
+}
+
+@media (max-width: 760px){
+  .mobile-bar{
+    display:flex;
+    position:fixed;
+    left:12px;
+    right:12px;
+    bottom:12px;
+    z-index:10001;
+
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.10);
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.18);
+    overflow:hidden;
+  }
+
+  .mb-btn{
+    flex:1;
+    text-decoration:none;
+    color:#111;
+    font-weight:700;
+    font-size:14px;
+    padding:14px 8px;
+    text-align:center;
+    border-right:1px solid rgba(0,0,0,0.08);
+  }
+
+  .mb-btn:last-child{
+    border-right:none;
+  }
+
+  .mb-primary{
+    color:#0057ff;
+    background:rgba(0,87,255,0.10);
+  }
+
+  .mb-btn:active{
+    transform:scale(0.97);
+  }
+
+  /* da sadržaj ne ide ispod bara */
+  body{
+    padding-bottom:90px;
+  }
+
+  /* sakrij brzu akciju (kartice) na telefonu */
+  .quick-actions{
+    display:none;
+  }
+}
