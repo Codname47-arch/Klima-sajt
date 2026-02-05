@@ -40,7 +40,7 @@
   // TUNING (po tvojoj želji)
   const THRESHOLD = 0.5;        // 50%
   const MANUAL_MS = 160;        // brzi "story snap"
-  const AUTO_MS = 700;          // mekši autoplay
+  const AUTO_MS = 900;          // mekši autoplay
   const AUTO_INTERVAL = 4500;   // vrijeme između slajdova
 
   function measure() {
