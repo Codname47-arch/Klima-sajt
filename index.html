@@ -20,30 +20,73 @@
       height:480px;
       overflow:hidden;
       background:#0a4cff;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
     }
 
+    /* fade prelaz slajdova */
     .slide{
       position:absolute;
       inset:0;
-      background-size:cover;
-      background-position:center;
-      display:none;
+      opacity:0;
+      transition: opacity 0.6s ease;
+      pointer-events:none;
+
+      /* pozadina se zadaje inline (background-image) */
+      background-size: cover;
+      background-position: center;
     }
 
-    .slide.active{ display:block; }
+    .slide.active{
+      opacity:1;
+      pointer-events:auto;
+    }
 
+    /* pokretna slika: stoji pa trci */
+    .slide::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: inherit; /* uzme isti background */
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      z-index: 0;
+    }
+
+    @keyframes panZoomFast {
+      from { transform: scale(1.05) translateX(0) translateY(0); }
+      to   { transform: scale(1.18) translateX(-4%) translateY(-3%); }
+    }
+
+    /* pokretanje animacije (2 sekunde) */
+    .slide.run::after{
+      animation: panZoomFast 2s linear forwards;
+    }
+
+    /* overlay preko slike */
     .overlay{
       position:absolute;
       inset:0;
       background: rgba(0,0,0,0.55);
+      z-index: 1;
     }
 
+    /* tekst centriran po visini i malo nize */
     .hero-content{
       position:relative;
       z-index:2;
       max-width: 900px;
-      margin:0 auto;
-      padding: 90px 18px;
+      margin: 0 auto;
+
+      height:100%;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+
+      transform: translateY(25px);
+      padding: 0 18px;
+
       text-align:center;
       color:#fff;
     }
@@ -64,7 +107,7 @@
       text-shadow: 0 8px 20px rgba(0,0,0,0.30);
     }
 
-    /* Moderniji CTA button */
+    /* moderniji CTA button */
     .hero-btn{
       display:inline-flex;
       align-items:center;
@@ -85,8 +128,8 @@
       -webkit-backdrop-filter: blur(8px);
 
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-      user-select:none;
       -webkit-tap-highlight-color: transparent;
+      user-select:none;
     }
 
     .hero-btn:hover{
@@ -98,6 +141,7 @@
       transform: scale(0.98);
     }
 
+    /* tačkice */
     .hero-dots{
       position:absolute;
       bottom: 16px;
@@ -105,7 +149,7 @@
       transform: translateX(-50%);
       display:flex;
       gap:10px;
-      z-index:5;
+      z-index: 5;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
@@ -172,7 +216,6 @@
     /* MOBILE */
     @media (max-width: 768px){
       .hero{ height: 420px; }
-      .hero-content{ padding: 78px 16px; }
       .hero-content h1{ font-size: 26px; }
       .hero-content p{ font-size: 15px; }
       .card{ width: 100%; }
@@ -246,7 +289,7 @@
     </div>
   </section>
 
-  <!-- SLIDER SCRIPT: auto, pause on hold, dots, swipe -->
+  <!-- SLIDER SCRIPT: 4s miruje + 2s trci = 6s, loop, dots, swipe, pause -->
   <script>
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
@@ -254,34 +297,43 @@
 
     let current = 0;
     let timer = null;
-    const INTERVAL = 4500;
 
-    function showSlide(i) {
-      slides[current].classList.remove('active');
+    const SLIDE_TIME = 6000;   // ukupno 6s po slajdu
+    const MOVE_DELAY = 4000;  // 4s miruje, pa krene (2s trci)
+
+    function showSlide(i){
+      // reset prethodnog
+      slides[current].classList.remove('active','run');
       dots[current].classList.remove('active');
 
       current = i;
 
       slides[current].classList.add('active');
       dots[current].classList.add('active');
+
+      // nakon 4s – pokreni sliku (2s animacija)
+      setTimeout(() => {
+        slides[current].classList.add('run');
+      }, MOVE_DELAY);
     }
 
-    function startAuto() {
+    function startAuto(){
       stopAuto();
       timer = setInterval(() => {
-        showSlide((current + 1) % slides.length);
-      }, INTERVAL);
+        showSlide((current + 1) % slides.length); // loop 4->1
+      }, SLIDE_TIME);
     }
 
-    function stopAuto() {
-      if (timer) clearInterval(timer);
+    function stopAuto(){
+      if(timer) clearInterval(timer);
       timer = null;
     }
 
-    // Start
+    // start
+    showSlide(0);
     startAuto();
 
-    // Dots click
+    // dots click
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
         showSlide(parseInt(dot.dataset.slide, 10));
@@ -289,32 +341,29 @@
       });
     });
 
-    // Pause on touch hold (mobile) + hover (desktop)
-    hero.addEventListener('touchstart', stopAuto, { passive: true });
-    hero.addEventListener('touchend', startAuto, { passive: true });
+    // pause on hold / hover
+    hero.addEventListener('touchstart', stopAuto, { passive:true });
+    hero.addEventListener('touchend', startAuto, { passive:true });
     hero.addEventListener('mouseenter', stopAuto);
     hero.addEventListener('mouseleave', startAuto);
 
-    // Swipe left/right
+    // swipe left/right
     let startX = 0;
-
-    hero.addEventListener('touchstart', (e) => {
+    hero.addEventListener('touchstart', e => {
       startX = e.touches[0].clientX;
-    }, { passive: true });
+    }, { passive:true });
 
-    hero.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-
-      if (Math.abs(dx) > 50) {
-        if (dx < 0) {
+    hero.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if(Math.abs(dx) > 50){
+        if(dx < 0){
           showSlide((current + 1) % slides.length);
         } else {
           showSlide((current - 1 + slides.length) % slides.length);
         }
         startAuto();
       }
-    }, { passive: true });
+    }, { passive:true });
   </script>
 
 </body>
