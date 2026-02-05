@@ -1,741 +1,346 @@
 /* =====================================================
-   RESET – UKLANJA CRNE I BIJELE OKVIRE
+   RESET / OSNOVA (UKLANJA OKVIRE)
    ===================================================== */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  background: #f2f3f5; /* prljavo sivo */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+html, body{
+  margin:0;
+  padding:0;
+  width:100%;
+  background:#f2f3f5; /* prljavo sivo */
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
+*{ box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
 
 /* =====================================================
-   STALNI HEADER (LOGO + 3 TAČKE)
+   STALNI HEADER (LOGO + HAMBURGER)
    ===================================================== */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
+.nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
 
-  height: 64px;
-  padding: 0 14px;
+  height:64px;
+  padding:0 14px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
 
-  background: #f2f3f5; /* promijeni u #fff ako hoćeš bijelo */
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  background:#f2f3f5; /* promijeni u #fff ako hoćeš bijelo */
+  border-bottom:1px solid rgba(0,0,0,0.08);
 
-  z-index: 9999;
+  z-index:9999;
 }
 
 /* LOGO */
-.nav-logo {
-  display: flex;
-  align-items: center;
+.nav-logo{
+  display:flex;
+  align-items:center;
 }
 
-.nav-logo img {
-  height: 48px;
-  width: auto;
-  display: block;
+.nav-logo img{
+  height:32px;
+  width:auto;
+  display:block;
 }
 
-/* HAMBURGER */
-.nav-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+/* HAMBURGER BUTTON (uvijek desno) */
+.nav-btn{
+  margin-left:auto;
+  width:40px;
+  height:40px;
+  border-radius:12px;
 
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.10);
+  background:rgba(0,0,0,0.05);
+  border:1px solid rgba(0,0,0,0.10);
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
 
-  cursor: pointer;
+  cursor:pointer;
+  flex-shrink:0;
+  padding:0;
 }
 
-.nav-btn span {
-  width: 18px;
-  height: 2px;
-  background: #111;
-  border-radius: 99px;
+.nav-btn span{
+  display:block;
+  width:18px;
+  height:2px;
+  background:#111;
+  border-radius:99px;
 }
 
-.nav-btn:active {
-  transform: scale(0.95);
-}
-
-/* DROPDOWN MENI */
-.nav-menu {
-  position: fixed;
-  top: 70px;
-  right: 14px;
-
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-
-  padding: 10px;
-  display: none;
-  z-index: 10000;
-}
-
-.nav-menu.open {
-  display: block;
-}
-
-.nav-menu a {
-  display: block;
-  padding: 12px 14px;
-  text-decoration: none;
-  color: #111;
-  font-weight: 500;
-  border-radius: 10px;
-}
-
-.nav-menu a:active {
-  background: #f2f3f5;
-}
+.nav-btn:active{ transform:scale(0.95); }
 
 /* =====================================================
-   BODY OFFSET (DA SADRŽAJ NE IDE ISPOD HEADERA)
+   DROPDOWN MENI (3 TAČKE / HAMBURGER)
    ===================================================== */
-body {
-  padding-top: 64px;
+.nav-menu{
+  position:fixed;
+  top:64px;            /* tačno ispod headera */
+  right:12px;
+
+  display:none;        /* VAŽNO: da linkovi ne “iskoče” u header */
+  width:280px;
+  max-width:calc(100vw - 24px);
+
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  border:1px solid rgba(0,0,0,0.08);
+
+  padding:8px;
+  z-index:10000;
 }
+
+.nav-menu.open{ display:block; }
+
+.nav-menu a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:12px 14px;
+  border-radius:10px;
+
+  text-decoration:none;
+  color:#111 !important;
+  font-weight:600;
+}
+
+.nav-menu a:hover{ background:#f2f3f5; }
+.nav-menu a:active{ background:#f2f3f5; transform:scale(0.99); }
+
+/* Divider u meniju */
+.menu-divider{
+  height:1px;
+  background:rgba(0,0,0,0.08);
+  margin:6px 0;
+}
+
+/* SVG ikonice u meniju */
+.nav-menu .icon{
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  color:#111;
+}
+.nav-menu .icon *{ stroke:currentColor; }
+.nav-menu .icon-fill{ fill:currentColor; }
+
+/* =====================================================
+   BODY OFFSET (da sadržaj ne ide ispod headera)
+   ===================================================== */
+body{ padding-top:64px; }
 
 /* =====================================================
    HERO + SLIDER
    ===================================================== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  min-height: 480px;
-  overflow: hidden;
+.hero{
+  position:relative;
+  width:100%;
+  height:70vh;
+  min-height:480px;
+  overflow:hidden;
 }
 
 /* TRACK */
-.slides-track {
-  display: flex;
-  height: 100%;
+.slides-track{
+  display:flex;
+  height:100%;
 }
 
 /* SLIDE */
-.slide {
-  flex: 0 0 100%;
-  height: 100%;
-  position: relative;
+.slide{
+  flex:0 0 100%;
+  height:100%;
+  position:relative;
 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
 }
 
 /* OVERLAY */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
-  pointer-events: none;
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+  pointer-events:none;
 }
 
 /* HERO CONTENT */
-.hero-content {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+.hero-content{
+  position:absolute;
+  inset:0;
+  z-index:2;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
-  text-align: center;
-  color: #fff;
-  padding: 0 16px;
+  text-align:center;
+  color:#fff;
+  padding:0 16px;
 }
 
-.hero-content h1 {
-  margin: 0 0 10px;
-  font-size: 32px;
+.hero-content h1{
+  margin:0 0 10px;
+  font-size:32px;
 }
 
-.hero-content p {
-  margin: 0 0 20px;
-  font-size: 16px;
-  opacity: 0.9;
+.hero-content p{
+  margin:0 0 20px;
+  font-size:16px;
+  opacity:0.9;
 }
 
 /* HERO BUTTON */
-.hero-btn {
-  background: #fff;
-  color: #0057ff;
-  text-decoration: none;
-  font-weight: 600;
+.hero-btn{
+  background:#fff;
+  color:#0057ff;
+  text-decoration:none;
+  font-weight:700;
 
-  padding: 14px 26px;
-  border-radius: 999px;
+  padding:14px 26px;
+  border-radius:999px;
 }
 
-.hero-btn:active {
-  transform: scale(0.96);
-  opacity: 0.9;
-}
+.hero-btn:active{ transform:scale(0.96); opacity:0.9; }
 
 /* DOTS */
-.hero-dots {
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 5;
+.hero-dots{
+  position:absolute;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:5;
 }
 
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.4);
 }
 
-.dot.active {
-  background: #fff;
+.dot.active{ background:#fff; }
+
+/* =====================================================
+   BRZA AKCIJA (DESKTOP / TABLET)
+   - auto-fit: radi sa 3 ili 4 kartice bez pucanja
+   ===================================================== */
+.quick-actions{
+  background:#f2f3f5;
+  padding:16px;
+}
+
+.qa-wrap{
+  max-width:1100px;
+  margin:0 auto;
+
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:14px;
+}
+
+.qa-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  border-radius:16px;
+  padding:16px;
+
+  text-decoration:none;
+  color:#111;
+
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:hover{ box-shadow:0 10px 26px rgba(0,0,0,0.10); }
+.qa-card:active{ transform:scale(0.97); }
+
+.qa-ico{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+
+  display:grid;
+  place-items:center;
+
+  background:rgba(0,0,0,0.05);
+  border:1px solid rgba(0,0,0,0.08);
+
+  font-size:20px;
+}
+
+.qa-title{
+  font-weight:800;
+  font-size:15px;
+  line-height:1.1;
+}
+
+.qa-sub{
+  font-size:13px;
+  color:#666;
+  margin-top:2px;
+}
+
+.qa-primary{
+  border-color:rgba(0,87,255,0.28);
+}
+
+.qa-primary .qa-ico{
+  background:rgba(0,87,255,0.12);
+  border-color:rgba(0,87,255,0.22);
 }
 
 /* =====================================================
-   SECTIONS ISPOD
+   SEKCIJE ISPOD
    ===================================================== */
 .ponuda,
-.sekcija {
-  padding: 60px 16px;
-  background: #fff;
+.sekcija{
+  padding:60px 16px;
+  background:#fff;
 }
 
 .ponuda h2,
-.sekcija h2 {
-  margin: 0 0 10px;
-  font-size: 26px;
+.sekcija h2{
+  margin:0 0 10px;
+  font-size:26px;
 }
 
 .ponuda p,
-.sekcija p {
-  margin: 0;
-  color: #666;
-  font-size: 15px;
+.sekcija p{
+  margin:0;
+  color:#666;
+  font-size:15px;
 }
 
 /* =====================================================
-   SMOOTH SCROLL
+   MOBILE STICKY BAR (telefon) + sakrij kartice
    ===================================================== */
-html {
-  scroll-behavior: smooth;
-}
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-}
-/* =====================================================
-   BRZA AKCIJA (3 kartice ispod slidera)
-   ===================================================== */
-.quick-actions{
-  background: #f2f3f5; /* isto kao body */
-  padding: 14px 16px 6px;
-}
-
-.qa-wrap{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.qa-card{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 16px;
-  padding: 14px 14px;
-
-  text-decoration: none;
-  color: #111;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  transition: transform .12s ease, box-shadow .12s ease;
-}
-
-.qa-card:active{
-  transform: scale(0.98);
-}
-
-.qa-ico{
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.06);
-
-  font-size: 20px;
-}
-
-.qa-title{
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.1;
-}
-
-.qa-sub{
-  font-size: 13px;
-  color: #666;
-  margin-top: 2px;
-}
-
-/* “primarna” kartica (upit) */
-.qa-primary{
-  border-color: rgba(0,87,255,0.25);
-}
-
-.qa-primary .qa-ico{
-  background: rgba(0,87,255,0.10);
-  border-color: rgba(0,87,255,0.18);
-}
-
-/* responsive */
-@media (max-width: 760px){
-  .qa-wrap{
-    grid-template-columns: 1fr;
-  }
-  .quick-actions{
-    padding-top: 12px;
-  }
-}
-   /* =====================================================
-   STICKY MOBILE BAR (TELEFON)
-   ===================================================== */
-.mobile-bar{
-  display:none;
-}
+.mobile-bar{ display:none; }
 
 @media (max-width: 760px){
+  /* sakrij desktop kartice na telefonu */
+  .quick-actions{ display:none; }
+
+  /* sticky bar dole */
   .mobile-bar{
     display:flex;
     position:fixed;
@@ -755,129 +360,22 @@ html {
     flex:1;
     text-decoration:none;
     color:#111;
-    font-weight:700;
+    font-weight:800;
     font-size:14px;
     padding:14px 8px;
     text-align:center;
     border-right:1px solid rgba(0,0,0,0.08);
   }
 
-  .mb-btn:last-child{
-    border-right:none;
-  }
+  .mb-btn:last-child{ border-right:none; }
 
   .mb-primary{
     color:#0057ff;
     background:rgba(0,87,255,0.10);
   }
 
-  .mb-btn:active{
-    transform:scale(0.97);
-  }
+  .mb-btn:active{ transform:scale(0.97); }
 
-  /* da sadržaj ne ide ispod bara */
-  body{
-    padding-bottom:90px;
-  }
-
-  /* sakrij brzu akciju (kartice) na telefonu */
-  .quick-actions{
-    display:none;
-  }
+  /* da sadržaj ne ide ispod sticky bara */
+  body{ padding-bottom:90px; }
 }
-   /* =====================================================
-   NAV MENU – DODATNI STIL
-   ===================================================== */
-.nav-menu a{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.menu-divider{
-  height:1px;
-  background:rgba(0,0,0,0.08);
-  margin:6px 0;
-}
-/* =====================================================
-   SVG IKONICE U MENIJU
-   ===================================================== */
-.nav-menu a{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.nav-menu .icon{
-  width:18px;
-  height:18px;
-  flex:0 0 18px;
-  color:#111;           /* boja ikonice */
-}
-
-.nav-menu .icon path,
-.nav-menu .icon circle,
-.nav-menu .icon rect,
-.nav-menu .icon line,
-.nav-menu .icon polyline{
-  stroke: currentColor;
-}
-/* ================= NAV MENU (FIX: stil + svg) ================= */
-.nav-menu a{
-  display:flex;
-  align-items:center;
-  gap:10px;
-
-  padding:12px 14px;          /* vrati "dugme" osjećaj */
-  text-decoration:none;
-  color:#111;
-  font-weight:600;
-  border-radius:10px;
-}
-
-.nav-menu a:hover{
-  background:#f2f3f5;
-}
-
-.nav-menu .icon{
-  width:18px;
-  height:18px;
-  flex:0 0 18px;
-  color:#111;
-}
-
-.nav-menu .icon *{
-  stroke: currentColor;
-}
-
-.nav-menu .icon-fill{
-  fill: currentColor;
-}
-   /* ================= HAMBURGER FIX + desni ćošak ================= */
-.nav{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.nav-btn{
-  margin-left:auto;      /* gura ga skroz desno */
-  padding:0;
-  flex-shrink:0;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:4px;
-}
-
-.nav-btn span{
-  display:block;
-  width:18px;
-  height:2px;
-  background:#111;
-  border-radius:99px;
-}
-
-
