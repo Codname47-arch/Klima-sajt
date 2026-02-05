@@ -1,180 +1,205 @@
-const hero = document.getElementById('hero');
-const track = document.getElementById('track');
-const dots = Array.from(document.querySelectorAll('.dot'));
+(() => {
+  const hero = document.getElementById("hero");
+  const track = document.getElementById("track");
+  const dotsWrap = document.getElementById("dots");
+  const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll(".dot")) : [];
 
-let slides = Array.from(track.children);
-const realCount = slides.length;
+  if (!hero || !track) return;
 
-// --- klonovi za seamless loop ---
-const firstClone = slides[0].cloneNode(true);
-const lastClone  = slides[slides.length - 1].cloneNode(true);
+  // Original slides (from HTML)
+  const originals = Array.from(track.children);
+  const realCount = originals.length;
 
-track.insertBefore(lastClone, slides[0]);
-track.appendChild(firstClone);
+  // Safety: ako nema dovoljno slajdova, nema šta da vrtimo
+  if (realCount < 2) return;
 
-slides = Array.from(track.children);
+  // ---- Infinite loop via clones ----
+  const firstClone = originals[0].cloneNode(true);
+  const lastClone = originals[realCount - 1].cloneNode(true);
+  firstClone.dataset.clone = "first";
+  lastClone.dataset.clone = "last";
 
-// index 1 = prvi pravi slajd
-let index = 1;
+  // ubaci klonove
+  track.insertBefore(lastClone, originals[0]);
+  track.appendChild(firstClone);
 
-let slideWidth = hero.clientWidth;
+  const slides = Array.from(track.children);
 
-// auto
-let timer = null;
-const AUTO_TIME = 6000;
+  // index: 0 = lastClone, 1..realCount = real slides, realCount+1 = firstClone
+  let index = 1;
 
-// swipe state
-let isDragging = false;
-let startX = 0;
-let startTranslate = 0;
-let startTime = 0;
+  let width = 0;
+  let isDragging = false;
+  let isAnimating = false;
 
-// pragovi
-const DIST_THRESHOLD = 0.22;     // 22% širine
-const VELOCITY_FLICK = 0.9;      // px/ms (flick)
-const VELOCITY_OK = 0.55;        // px/ms (brži swipe)
+  let startX = 0;
+  let currentX = 0;
 
-// helpers
-function setTransitionMs(ms) {
-  track.style.transition = `transform ${ms}ms cubic-bezier(.2,.9,.2,1)`;
-}
+  let autoplayId = null;
 
-function setNoTransition() {
-  track.style.transition = 'none';
-}
+  // TUNING (po tvojoj želji)
+  const THRESHOLD = 0.5;        // 50%
+  const MANUAL_MS = 170;        // brzi "story snap"
+  const AUTO_MS = 380;          // mekši autoplay
+  const AUTO_INTERVAL = 4200;   // vrijeme između slajdova
 
-function translateFor(i) {
-  return -i * slideWidth;
-}
-
-function setTranslate(px) {
-  track.style.transform = `translateX(${px}px)`;
-}
-
-function realIndexFrom(i) {
-  if (i === 0) return realCount - 1;
-  if (i === realCount + 1) return 0;
-  return i - 1;
-}
-
-function updateDots() {
-  const r = realIndexFrom(index);
-  dots.forEach(d => d.classList.remove('active'));
-  dots[r].classList.add('active');
-}
-
-function goTo(i, ms = 1200) {
-  index = i;
-  setTransitionMs(ms);
-  setTranslate(translateFor(index));
-  updateDots();
-}
-
-function snapTo(i) {
-  index = i;
-  setNoTransition();
-  setTranslate(translateFor(index));
-  updateDots();
-}
-
-// init
-setNoTransition();
-setTranslate(translateFor(index));
-updateDots();
-
-// auto
-function startAuto() {
-  stopAuto();
-  timer = setInterval(() => {
-    goTo(index + 1, 1200);
-  }, AUTO_TIME);
-}
-function stopAuto() {
-  if (timer) clearInterval(timer);
-  timer = null;
-}
-startAuto();
-
-// seamless teleport bez crnog (dvostruki requestAnimationFrame)
-track.addEventListener('transitionend', () => {
-  if (index === 0) {
-    requestAnimationFrame(() => {
-      snapTo(realCount);
-    });
-  } else if (index === realCount + 1) {
-    requestAnimationFrame(() => {
-      snapTo(1);
-    });
+  function measure() {
+    // VAŽNO: uzmi širinu VIDLJIVOG prozora (hero), ne track
+    width = hero.getBoundingClientRect().width;
   }
-});
 
-// dots click
-dots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    const targetReal = parseInt(dot.dataset.slide, 10); // 0..3
-    const targetIndex = targetReal + 1; // 1..4
-    goTo(targetIndex, 900);
-    startAuto();
+  function setTransition(ms, easing = "cubic-bezier(.2,.85,.25,1)") {
+    track.style.transition = ms ? `transform ${ms}ms ${easing}` : "none";
+  }
+
+  function setTranslate(px) {
+    track.style.transform = `translate3d(${px}px,0,0)`;
+  }
+
+  function teleportTo(newIndex) {
+    // "nevidljiv" skok: bez tranzicije, u sledećem frame-u
+    setTransition(0);
+    index = newIndex;
+    setTranslate(-index * width);
+  }
+
+  function getRealIndex() {
+    // map: index=1 -> 0, index=realCount -> realCount-1
+    let r = index - 1;
+    if (r < 0) r = realCount - 1;
+    if (r >= realCount) r = 0;
+    return r;
+  }
+
+  function updateDots() {
+    if (!dots.length) return;
+    const r = getRealIndex();
+    dots.forEach((d, i) => d.classList.toggle("active", i === r));
+  }
+
+  function goTo(nextIndex, ms) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    setTransition(ms);
+    index = nextIndex;
+    setTranslate(-index * width);
+
+    const onEnd = () => {
+      track.removeEventListener("transitionend", onEnd);
+
+      // Ako smo završili na klonu, teleportuj na real slajd (bez crnog)
+      const cur = slides[index];
+      if (cur && cur.dataset.clone === "first") {
+        // bili smo na zadnjem+1, vraćamo na prvi real (index=1)
+        requestAnimationFrame(() => teleportTo(1));
+      } else if (cur && cur.dataset.clone === "last") {
+        // bili smo na 0, vraćamo na zadnji real (index=realCount)
+        requestAnimationFrame(() => teleportTo(realCount));
+      }
+
+      updateDots();
+      isAnimating = false;
+    };
+
+    track.addEventListener("transitionend", onEnd);
+  }
+
+  // ---- Autoplay ----
+  function stopAutoplay() {
+    if (autoplayId) clearInterval(autoplayId);
+    autoplayId = null;
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayId = setInterval(() => {
+      if (isDragging || isAnimating) return;
+      goTo(index + 1, AUTO_MS);
+    }, AUTO_INTERVAL);
+  }
+
+  // ---- Swipe (Insta snap) ----
+  function onDown(x) {
+    if (isAnimating) return;
+    isDragging = true;
+    startX = x;
+    currentX = x;
+
+    stopAutoplay();
+    setTransition(0);
+  }
+
+  function onMove(x) {
+    if (!isDragging) return;
+    currentX = x;
+    const delta = currentX - startX;
+    setTranslate((-index * width) + delta);
+  }
+
+  function onUp() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const delta = currentX - startX;
+    const movedRatio = Math.abs(delta) / width;
+
+    // >= 50% → prebaci brzo, inače vrati brzo
+    if (movedRatio >= THRESHOLD) {
+      if (delta < 0) {
+        // swipe lijevo → sledeći
+        goTo(index + 1, MANUAL_MS);
+      } else {
+        // swipe desno → prethodni
+        goTo(index - 1, MANUAL_MS);
+      }
+    } else {
+      // vrati na isti
+      goTo(index, MANUAL_MS);
+    }
+
+    startAutoplay();
+  }
+
+  // Touch
+  track.addEventListener("touchstart", (e) => onDown(e.touches[0].clientX), { passive: true });
+  track.addEventListener("touchmove", (e) => onMove(e.touches[0].clientX), { passive: true });
+  track.addEventListener("touchend", onUp);
+
+  // Mouse
+  track.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    onDown(e.clientX);
   });
-});
+  window.addEventListener("mousemove", (e) => onMove(e.clientX));
+  window.addEventListener("mouseup", onUp);
 
-// resize
-window.addEventListener('resize', () => {
-  slideWidth = hero.clientWidth;
-  snapTo(index);
-});
+  // Dots click
+  if (dotsWrap) {
+    dotsWrap.addEventListener("click", (e) => {
+      const dot = e.target.closest(".dot");
+      if (!dot) return;
 
-// SMART swipe (prati prst)
-hero.addEventListener('touchstart', (e) => {
-  stopAuto();
-  isDragging = true;
+      const realTarget = Number(dot.dataset.slide); // 0..3
+      const nextIndex = realTarget + 1; // jer real0 je index=1
 
-  setNoTransition();
-
-  startX = e.touches[0].clientX;
-  startTime = Date.now();
-  startTranslate = translateFor(index);
-}, { passive:true });
-
-hero.addEventListener('touchmove', (e) => {
-  if (!isDragging) return;
-  const x = e.touches[0].clientX;
-  const dx = x - startX;
-
-  setTranslate(startTranslate + dx);
-}, { passive:true });
-
-hero.addEventListener('touchend', (e) => {
-  if (!isDragging) return;
-  isDragging = false;
-
-  const endX = e.changedTouches[0].clientX;
-  const dx = endX - startX;
-  const dt = Math.max(1, Date.now() - startTime);
-
-  const velocity = Math.abs(dx / dt); // px/ms
-  const ratio = Math.abs(dx) / slideWidth;
-
-  // brzina animacije zavisi od “zaleta”
-  // flick -> veoma brzo, brži swipe -> brzo, inače normalno
-  let animMs = 900;
-  if (velocity >= VELOCITY_FLICK) animMs = 280;
-  else if (velocity >= VELOCITY_OK) animMs = 450;
-  else animMs = 900;
-
-  // Odluka: pređi ako je dovoljno daleko ili dovoljno brzo
-  const shouldMove = (ratio > DIST_THRESHOLD) || (velocity >= VELOCITY_OK);
-
-  if (shouldMove) {
-    if (dx < 0) goTo(index + 1, animMs);
-    else goTo(index - 1, animMs);
-  } else {
-    goTo(index, 650);
+      stopAutoplay();
+      goTo(nextIndex, MANUAL_MS);
+      startAutoplay();
+    });
   }
 
-  startAuto();
-}, { passive:true });
+  // Resize fix (sprječava prazninu/crno nakon rotacije/resize)
+  window.addEventListener("resize", () => {
+    measure();
+    setTransition(0);
+    setTranslate(-index * width);
+  });
 
-// desktop hover pause
-hero.addEventListener('mouseenter', stopAuto);
-hero.addEventListener('mouseleave', startAuto);
+  // Init
+  measure();
+  setTransition(0);
+  setTranslate(-index * width);
+  updateDots();
+  startAutoplay();
+})();
