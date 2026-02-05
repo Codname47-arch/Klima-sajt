@@ -822,6 +822,33 @@ html {
 .nav-menu .icon polyline{
   stroke: currentColor;
 }
+/* ================= NAV MENU (FIX: stil + svg) ================= */
+.nav-menu a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:12px 14px;          /* vrati "dugme" osjećaj */
+  text-decoration:none;
+  color:#111;
+  font-weight:600;
+  border-radius:10px;
+}
+
+.nav-menu a:hover{
+  background:#f2f3f5;
+}
+
+.nav-menu .icon{
+  width:18px;
+  height:18px;
+  flex:0 0 18px;
+  color:#111;
+}
+
+.nav-menu .icon *{
+  stroke: currentColor;
+}
 
 .nav-menu .icon-fill{
   fill: currentColor;
