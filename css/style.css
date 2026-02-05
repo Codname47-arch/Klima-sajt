@@ -5,7 +5,7 @@ body{
   color:#111;
 }
 
-/* ===== HERO ===== */
+/* HERO */
 .hero{
   position:relative;
   width:100%;
@@ -14,7 +14,7 @@ body{
   background:#000;
   -webkit-tap-highlight-color: transparent;
   user-select:none;
-  touch-action: pan-y; /* dozvoli vertikalni scroll stranice */
+  touch-action: pan-y; /* dozvoli scroll stranice */
 }
 
 /* TRACK */
@@ -22,10 +22,10 @@ body{
   display:flex;
   height:100%;
   will-change: transform;
-  transition: transform 1.5s ease-in-out; /* normalna animacija */
+  transition: transform 1.2s ease-in-out; /* normal auto prelaz */
 }
 
-/* Svaki slajd je širine ekrana */
+/* slajd */
 .slide{
   min-width:100%;
   height:100%;
@@ -68,7 +68,6 @@ body{
   text-shadow: 0 8px 20px rgba(0,0,0,0.30);
 }
 
-/* dugme */
 .hero-btn{
   display:inline-block;
   padding:14px 22px;
@@ -80,9 +79,6 @@ body{
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
-.hero-btn:active{ transform: scale(0.98); }
-
-/* tačkice */
 .hero-dots{
   position:absolute;
   bottom:16px;
@@ -100,28 +96,20 @@ body{
   background:rgba(255,255,255,0.5);
   cursor:pointer;
 }
-
 .dot.active{ background:#fff; }
 
-/* ===== PONUDA ===== */
+/* PONUDA */
 .ponuda{
   padding:40px 18px;
   max-width:1100px;
   margin:0 auto;
 }
-
 .ponuda-title{
   font-size:22px;
   font-weight:900;
   margin:0 0 16px 0;
 }
-
-.cards{
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
-}
-
+.cards{ display:flex; gap:16px; flex-wrap:wrap; }
 .card{
   background:#fff;
   border-radius:12px;
@@ -130,17 +118,6 @@ body{
   box-shadow:0 10px 24px rgba(0,0,0,0.08);
 }
 
-.card h2{ margin:0 0 8px 0; }
-
-.card a{
-  display:inline-block;
-  margin-top:10px;
-  color:#0a4cff;
-  font-weight:900;
-  text-decoration:none;
-}
-
-/* MOBILE */
 @media(max-width:768px){
   .hero{ height:420px; }
   .hero-content{ padding:78px 16px; }
