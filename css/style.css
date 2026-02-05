@@ -137,4 +137,23 @@ body{
 .slide {
   flex: 0 0 100%;
 }
+/* ===== SLIDER HARD FIX (STAVI NA KRAJ style.css) ===== */
+.hero{
+  overflow:hidden;
+}
+
+.slides-track{
+  display:flex;
+  height:100%;
+  width:100%;
+  transform: translate3d(0,0,0);
+}
+
+.slide{
+  flex: 0 0 100%;
+  width:100%;
+  min-width:100%;
+  height:100%;
+}
+
 
