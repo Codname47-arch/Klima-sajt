@@ -184,4 +184,31 @@
   setTranslate(-index * width);
   updateDots();
   startAutoplay();
+  // MENU (hamburger)
+const menuBtn = document.getElementById("menuBtn");
+const navMenu = document.getElementById("navMenu");
+
+if (menuBtn && navMenu) {
+  const closeMenu = () => {
+    navMenu.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  };
+
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = navMenu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  // klik van menija zatvara
+  document.addEventListener("click", closeMenu);
+
+  // klik na link zatvara meni
+  navMenu.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+    closeMenu();
+  });
+}
+
 })();
