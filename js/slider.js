@@ -44,9 +44,8 @@
   const AUTO_INTERVAL = 4200;   // vrijeme između slajdova
 
   function measure() {
-    // VAŽNO: uzmi širinu VIDLJIVOG prozora (hero), ne track
-    width = hero.getBoundingClientRect().width;
-  }
+  width = hero.clientWidth || hero.getBoundingClientRect().width || 0;
+}
 
   function setTransition(ms, easing = "cubic-bezier(.2,.85,.25,1)") {
     track.style.transition = ms ? `transform ${ms}ms ${easing}` : "none";
@@ -77,9 +76,49 @@
     dots.forEach((d, i) => d.classList.toggle("active", i === r));
   }
 
-  function goTo(nextIndex, ms) {
-    if (isAnimating) return;
-    isAnimating = true;
+  
+function goTo(nextIndex, ms) {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  // ako width slučajno ispadne 0 (rijetko na mobu), odmah izmjeri opet
+  if (!width) measure();
+
+  setTransition(ms);
+  index = nextIndex;
+  setTranslate(-index * width);
+
+  let done = false;
+
+  const finish = () => {
+    if (done) return;
+    done = true;
+
+    // Ako smo završili na klonu, teleportuj na real slajd (bez crnog)
+    const cur = slides[index];
+    if (cur && cur.dataset.clone === "first") {
+      requestAnimationFrame(() => teleportTo(1));
+    } else if (cur && cur.dataset.clone === "last") {
+      requestAnimationFrame(() => teleportTo(realCount));
+    }
+
+    updateDots();
+    isAnimating = false;
+  };
+
+  const onEnd = () => {
+    track.removeEventListener("transitionend", onEnd);
+    finish();
+  };
+
+  track.addEventListener("transitionend", onEnd);
+
+  // FAIL-SAFE: ako transitionend ne stigne, završi nakon malo više od ms
+  setTimeout(() => {
+    track.removeEventListener("transitionend", onEnd);
+    finish();
+  }, (ms || 0) + 80);
+}
 
     setTransition(ms);
     index = nextIndex;
