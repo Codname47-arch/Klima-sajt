@@ -1,4 +1,10 @@
 (() => {
+    // FIX: ne skrolaj automatski na #ponuda ili bilo koji hash pri ulasku
+  if (window.location.hash && window.location.hash !== "#hero") {
+    history.replaceState(null, "", window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+
   const hero = document.getElementById("hero");
   const track = document.getElementById("track");
   const dotsWrap = document.getElementById("dots");
