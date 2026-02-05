@@ -159,6 +159,10 @@ body{
 .overlay{
   pointer-events: none;
 }
+.hero-btn:active{
+  transform: scale(0.96);
+  opacity: 0.85;
+}
 
 
 
