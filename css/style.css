@@ -163,6 +163,92 @@ body{
   transform: scale(0.96);
   opacity: 0.85;
 }
+html { scroll-behavior: smooth; }
+
+/* NAVBAR */
+.nav{
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  pointer-events: none; /* da ne smeta slajdu */
+}
+
+.nav-logo, .nav-btn, .nav-menu { pointer-events: auto; }
+
+.nav-logo img{
+  height: 38px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+}
+
+/* hamburger */
+.nav-btn{
+  width: 46px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.nav-btn span{
+  width: 18px;
+  height: 2px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 99px;
+  display: block;
+}
+
+/* dropdown meni */
+.nav-menu{
+  position: absolute;
+  top: 56px;
+  right: 14px;
+  width: min(260px, calc(100vw - 28px));
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  display: none;
+}
+
+.nav-menu.open{ display: block; }
+
+.nav-link{
+  display: block;
+  padding: 12px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: rgba(255,255,255,0.92);
+  border: 1px solid transparent;
+}
+
+.nav-link:active{
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+/* sekcije placeholder */
+.sekcija{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 16px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.sekcija h2{ margin: 0 0 12px; }
+.sekcija p{ margin: 0; color: rgba(233,238,247,0.75); }
+
 
 
 
