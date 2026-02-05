@@ -245,3 +245,486 @@ body {
 html {
   scroll-behavior: smooth;
 }
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+}
+/* =====================================================
+   BRZA AKCIJA (3 kartice ispod slidera)
+   ===================================================== */
+.quick-actions{
+  background: #f2f3f5; /* isto kao body */
+  padding: 14px 16px 6px;
+}
+
+.qa-wrap{
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.qa-card{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px 14px;
+
+  text-decoration: none;
+  color: #111;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.qa-card:active{
+  transform: scale(0.98);
+}
+
+.qa-ico{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.06);
+
+  font-size: 20px;
+}
+
+.qa-title{
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.1;
+}
+
+.qa-sub{
+  font-size: 13px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* “primarna” kartica (upit) */
+.qa-primary{
+  border-color: rgba(0,87,255,0.25);
+}
+
+.qa-primary .qa-ico{
+  background: rgba(0,87,255,0.10);
+  border-color: rgba(0,87,255,0.18);
+}
+
+/* responsive */
+@media (max-width: 760px){
+  .qa-wrap{
+    grid-template-columns: 1fr;
+  }
+  .quick-actions{
+    padding-top: 12px;
+  }
+}
