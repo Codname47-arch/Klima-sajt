@@ -276,6 +276,89 @@ html { scroll-behavior: smooth; }
 .nav-btn:active{
   transform: scale(0.92);
 }
+/* ===== STALNI TOP BAR (LOGO + MENI) ===== */
+:root{
+  --topbar-h: 64px;
+  --topbar-bg: #f2f3f5; /* prljavo bijela */
+}
+
+/* header uvijek gore */
+.nav{
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: var(--topbar-h);
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--topbar-bg);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  z-index: 9999;
+}
+
+/* logo lijevo, stabilan */
+.nav-logo{
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.nav-logo img{
+  height: 34px;   /* po potrebi 32-36 */
+  width: auto;
+  display: block;
+}
+
+/* hamburger desno */
+.nav-btn{
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.10);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+
+  cursor: pointer;
+}
+
+.nav-btn span{
+  width: 18px;
+  height: 2px;
+  background: #111;
+  border-radius: 99px;
+}
+
+/* meni neka se otvara ispod top bara */
+.nav-menu{
+  top: calc(var(--topbar-h) + 8px);
+}
+
+/* spusti hero sadržaj ispod top bara */
+.hero{
+  padding-top: var(--topbar-h);
+}
+
+/* da overlay ne blokira klikove */
+.overlay{
+  pointer-events: none;
+}
+
+/* malo estetski “luft” iznad slajda */
+.slides-track{
+  margin-top: 8px;
+}
+
 
 
 
