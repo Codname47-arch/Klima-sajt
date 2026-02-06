@@ -503,3 +503,81 @@ body{ padding-top:64px; }
   font-size:16px;
   border-bottom:1px solid rgba(0,0,0,0.08);
 }
+/* ================= MOBILE LOOK kao webshop lista ================= */
+@media (max-width: 760px){
+
+  .klime-grid{
+    grid-template-columns: 1fr;  /* 1 po redu */
+    gap: 14px;
+  }
+
+  .klima-card{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+  }
+
+  .klima-card img{
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background: #f7f8fa;
+    padding: 8px;
+    flex: 0 0 120px;
+  }
+
+  .klima-body{
+    padding: 14px;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .klima-title{
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .klima-desc{
+    font-size: 13px;
+    color: #666;
+  }
+
+  .klima-price{
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #d10000; /* crvena kao akcija */
+  }
+
+  .klima-old{
+    margin-left: 8px;
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 600;
+  }
+
+  .btn-call{
+    margin-top: 10px;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Popust badge */
+  .klima-badge{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff0000;
+    color: #fff;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+}
