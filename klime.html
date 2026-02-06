@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ponuda klima</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="nav">
+  <a class="nav-logo" href="index.html" aria-label="Početna">
+    <img src="logo.png" alt="Logo" />
+  </a>
+
+  <button class="nav-btn" id="menuBtn" aria-label="Meni" aria-expanded="false" type="button">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="nav-menu" id="navMenu" aria-label="Navigacija">
+    <a href="tel:+38766813039">Pozovi 066 813 039</a>
+    <a href="tel:+38766813112">Pozovi 066 813 112</a>
+    <a href="viber://chat?number=%2B38766813039">Viber poruka</a>
+    <div class="menu-divider"></div>
+    <a href="index.html#top-ponuda">Top ponuda</a>
+    <a href="index.html#servis">Ugradnja</a>
+    <a href="index.html#onama">O nama</a>
+  </nav>
+</header>
+
+<main class="page">
+  <section class="klime-hero">
+    <div class="container">
+      <h1 class="page-title">Ponuda klima</h1>
+      <p class="page-sub">Cijene su prikazane <strong>sa ugradnjom</strong>. Odaberi filtere i pronađi model.</p>
+    </div>
+  </section>
+
+  <section class="klime-wrap">
+    <div class="container">
+
+      <!-- FILTER BAR -->
+      <div class="filters">
+        <div class="filter">
+          <label>BTU</label>
+          <select id="filterBtu">
+            <option value="">Sve</option>
+            <option value="9k">9k</option>
+            <option value="12k">12k</option>
+            <option value="18k">18k</option>
+            <option value="24k">24k</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label>Brend</label>
+          <select id="filterBrand">
+            <option value="">Svi</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label>Namjena</label>
+          <select id="filterNamjena">
+            <option value="">Sve</option>
+            <option value="hladjenje">Hlađenje</option>
+            <option value="dogrijavanje">Dogrijavanje</option>
+            <option value="grijanje">Grijanje</option>
+          </select>
+        </div>
+
+        <div class="filter">
+          <label>Sortiranje</label>
+          <select id="sortBy">
+            <option value="popularnost">Najpopularnije</option>
+            <option value="cijenaAsc">Najniža cijena</option>
+            <option value="cijenaDesc">Najviša cijena</option>
+          </select>
+        </div>
+
+        <button class="btn-clear" id="clearFilters" type="button">Očisti filtere</button>
+      </div>
+
+      <!-- CHIPS -->
+      <div class="chips" id="activeChips"></div>
+
+      <!-- GRID -->
+      <div class="klime-grid all" id="allKlimeGrid"></div>
+
+    </div>
+  </section>
+
+  <!-- CTA BLOCK -->
+  <section class="cta-block" id="cta">
+    <div class="container cta-inner">
+      <div>
+        <h2>Trebaš pomoć oko izbora?</h2>
+        <p>Pošalji upit ili nas pozovi — preporučićemo model po kvadraturi i namjeni.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn-primary" href="tel:+38766813039">Pozovi</a>
+        <a class="btn-outline" href="viber://chat?number=%2B38766813039">Viber</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2 class="section-title">FAQ</h2>
+
+      <details class="faq-item">
+        <summary>Da li je cijena sa ugradnjom konačna?</summary>
+        <p>Cijena je informativna sa standardnom ugradnjom. Specifične situacije (duža instalacija, otežan pristup) dogovaraju se prije radova.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Koliko traje ugradnja?</summary>
+        <p>U većini slučajeva 2–4 sata, zavisno od pozicije unutrašnje/vanjske jedinice i dužine instalacije.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Da li dobijam garanciju?</summary>
+        <p>Da — ugradnja se radi profesionalno, uz dogovor i evidenciju radova.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<!-- Sticky mobile bar (isto kao na indexu) -->
+<div class="mobile-bar" aria-label="Brzi kontakt">
+  <a class="mb-btn" href="tel:+38766813039">Pozovi 039</a>
+  <a class="mb-btn" href="tel:+38766813112">Pozovi 112</a>
+  <a class="mb-btn mb-primary" href="viber://chat?number=%2B38766813039">Viber</a>
+</div>
+
+<script src="data/klime.js"></script>
+<script src="js/klime-page.js"></script>
+<script src="js/slider.js"></script>
+</body>
+</html>
 
