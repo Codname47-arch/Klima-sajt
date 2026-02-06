@@ -11,6 +11,17 @@ window.KLIME = [
     featured: true,
     slika: "img/tesla12.jpg"
   },
+    {
+    id: "midea-12",
+    naziv: "Midea-12",
+    brand: "Midea",
+    btu: "12k",
+    namjena: ["hladjenje", "dogrijavanje", "grijanje"],
+    cijenaSaUgradnjom: 750,
+    popularnost: 95,
+    featured: true,
+    slika: "img/tesla12.jpg"
+  },
   {
     id: "tesla-9",
     naziv: "Tesla Inverter 9",
