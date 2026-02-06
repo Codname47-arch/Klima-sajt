@@ -1,4 +1,4 @@
-const KLIME = [
+window.KLIME = [
   {
     naziv: "Tesla Inverter 12",
     opis: "Grijanje do -15°C, tih i stabilan rad",
