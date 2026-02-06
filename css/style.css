@@ -409,6 +409,7 @@ body{ padding-top:64px; }
 }
 
 .klima-card{
+  position: relative;     /* ✅ DODAJ OVO */
   background:#f9fafb;
   border-radius:18px;
   overflow:hidden;
@@ -416,6 +417,7 @@ body{ padding-top:64px; }
   display:flex;
   flex-direction:column;
 }
+
 
 .klima-card img{
   width:100%;
