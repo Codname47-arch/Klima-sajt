@@ -581,3 +581,33 @@ body{ padding-top:64px; }
     border-radius: 10px;
   }
 }
+/* ===== CIJENE I POPUST (GLOBALNO) ===== */
+
+.klima-price{
+  font-weight: 900;
+  font-size: 16px;
+  color: #d10000; /* crvena cijena svuda */
+}
+
+.klima-old{
+  margin-left: 8px;
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.klima-badge{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #d10000;   /* crveni badge svuda */
+  color: #fff;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+
