@@ -1,31 +1,48 @@
 (() => {
-      // FIX: spriječi browser da pamti anchor i skroluje na #ponuda/#onama pri ulasku
+  // ======== FIX: ne skači na #sekcije pri refreshu ========
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-
   if (location.hash && location.hash !== "#hero") {
     history.replaceState(null, "", location.pathname + location.search);
     window.scrollTo(0, 0);
   }
 
-    // FIX: ne skrolaj automatski na #ponuda ili bilo koji hash pri ulasku
-  if (window.location.hash && window.location.hash !== "#hero") {
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-    window.scrollTo(0, 0);
+  // ======== MENU (radi na svim stranicama) ========
+  const menuBtn = document.getElementById("menuBtn");
+  const navMenu = document.getElementById("navMenu");
+
+  if (menuBtn && navMenu) {
+    const closeMenu = () => {
+      navMenu.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    };
+
+    menuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = navMenu.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+    });
+
+    navMenu.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => closeMenu());
+    });
   }
 
+  // ======== SLIDER (samo ako postoji hero/track) ========
   const hero = document.getElementById("hero");
   const track = document.getElementById("track");
   const dotsWrap = document.getElementById("dots");
 
-  if (!hero || !track) return;
+  if (!hero || !track) return; // ako si na klime.html → preskoči slider
 
   const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll(".dot")) : [];
-
   const originals = Array.from(track.children);
   const realCount = originals.length;
   if (realCount < 2) return;
 
-  // clones
   const firstClone = originals[0].cloneNode(true);
   const lastClone = originals[realCount - 1].cloneNode(true);
   firstClone.dataset.clone = "first";
@@ -43,10 +60,9 @@
   let startX = 0;
   let currentX = 0;
 
-  // tuning
-  const THRESHOLD = 0.5;    // 50%
-  const MANUAL_MS = 160;    // brzo (swipe)
-  const AUTO_MS = 700;      // sporije (auto)
+  const THRESHOLD = 0.5;
+  const MANUAL_MS = 160;
+  const AUTO_MS = 700;
   const AUTO_INTERVAL = 4500;
 
   let autoplayId = null;
@@ -54,28 +70,23 @@
   function measure() {
     width = hero.clientWidth || hero.getBoundingClientRect().width || 0;
   }
-
   function setTransition(ms) {
     track.style.transition = ms ? `transform ${ms}ms cubic-bezier(.2,.85,.25,1)` : "none";
   }
-
   function setTranslate(px) {
     track.style.transform = `translate3d(${px}px,0,0)`;
   }
-
   function teleportTo(newIndex) {
     setTransition(0);
     index = newIndex;
     setTranslate(-index * width);
   }
-
   function realIndex() {
     let r = index - 1;
     if (r < 0) r = realCount - 1;
     if (r >= realCount) r = 0;
     return r;
   }
-
   function updateDots() {
     if (!dots.length) return;
     const r = realIndex();
@@ -98,11 +109,8 @@
       done = true;
 
       const cur = slides[index];
-      if (cur?.dataset.clone === "first") {
-        requestAnimationFrame(() => teleportTo(1));
-      } else if (cur?.dataset.clone === "last") {
-        requestAnimationFrame(() => teleportTo(realCount));
-      }
+      if (cur?.dataset.clone === "first") requestAnimationFrame(() => teleportTo(1));
+      else if (cur?.dataset.clone === "last") requestAnimationFrame(() => teleportTo(realCount));
 
       updateDots();
       isAnimating = false;
@@ -124,7 +132,6 @@
     if (autoplayId) clearInterval(autoplayId);
     autoplayId = null;
   }
-
   function startAutoplay() {
     stopAutoplay();
     autoplayId = setInterval(() => {
@@ -133,7 +140,6 @@
     }, AUTO_INTERVAL);
   }
 
-  // Pointer events (najbolje za Android)
   track.style.touchAction = "pan-y";
 
   track.addEventListener("pointerdown", (e) => {
@@ -160,11 +166,8 @@
     const delta = currentX - startX;
     const movedRatio = Math.abs(delta) / width;
 
-    if (movedRatio >= THRESHOLD) {
-      goTo(delta < 0 ? index + 1 : index - 1, MANUAL_MS);
-    } else {
-      goTo(index, MANUAL_MS);
-    }
+    if (movedRatio >= THRESHOLD) goTo(delta < 0 ? index + 1 : index - 1, MANUAL_MS);
+    else goTo(index, MANUAL_MS);
 
     startAutoplay();
   });
@@ -176,7 +179,6 @@
     startAutoplay();
   });
 
-  // dots
   dotsWrap?.addEventListener("click", (e) => {
     const dot = e.target.closest(".dot");
     if (!dot) return;
@@ -192,37 +194,10 @@
     setTranslate(-index * width);
   });
 
-  // init
   measure();
   setTransition(0);
   setTranslate(-index * width);
   updateDots();
   startAutoplay();
-  // MENU (hamburger)
-const menuBtn = document.getElementById("menuBtn");
-const navMenu = document.getElementById("navMenu");
-
-if (menuBtn && navMenu) {
-  const closeMenu = () => {
-    navMenu.classList.remove("open");
-    menuBtn.setAttribute("aria-expanded", "false");
-  };
-
-  menuBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const open = navMenu.classList.toggle("open");
-    menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
-  });
-
-  // klik van menija zatvara
-  document.addEventListener("click", closeMenu);
-
-  // klik na link zatvara meni
-  navMenu.addEventListener("click", (e) => {
-    const a = e.target.closest("a");
-    if (!a) return;
-    closeMenu();
-  });
-}
-
 })();
+
