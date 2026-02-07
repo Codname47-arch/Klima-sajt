@@ -12,17 +12,30 @@ document.addEventListener("DOMContentLoaded", () => {
   // prvih 4 featured:true (bez dopunjavanja)
   const featured = data.filter(k => k.featured === true).slice(0, 4);
 
-  grid.innerHTML = featured.map(k => `
+grid.innerHTML = featured.map(k => {
+  const hasDiscount = k.popust && k.staraCijena;
+
+  return `
     <article class="klima-card">
+      ${hasDiscount ? `<div class="klima-badge">${k.popust}</div>` : ""}
+
       <img src="${k.slika}" alt="${k.naziv}">
+
       <div class="klima-body">
         <div class="klima-title">${k.naziv}</div>
         <div class="klima-desc">${k.brand} • ${k.btu} • ${formatNamjena(k.namjena)}</div>
-        <div class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</div>
+
+        <div class="price-row">
+          <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
+          ${hasDiscount ? `<span class="klima-old">${k.staraCijena} KM</span>` : ""}
+        </div>
+
         <a class="btn-call" href="tel:+38766813039">Pozovi</a>
       </div>
     </article>
-  `).join("");
+  `;
+}).join("");
+
 
   function formatCijena(n){
     const num = Number(n);
