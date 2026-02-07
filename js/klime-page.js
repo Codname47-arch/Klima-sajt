@@ -86,10 +86,30 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.innerHTML = out.map(k => cardHTML(k)).join("") || emptyHTML();
   }
 
-  function cardHTML(k){
-    const price = formatCijena(k.cijenaSaUgradnjom);
-    const tags = `${esc(k.brand)} • ${esc(k.btu)} • ${formatNamjena(k.namjena)}`;
+function cardHTML(k){
+  const hasDiscount = k.popust && k.staraCijena;
 
+  return `
+    <article class="klima-card">
+      ${hasDiscount ? `<div class="klima-badge">${k.popust}</div>` : ""}
+
+      <img src="${esc(k.slika)}" alt="${esc(k.naziv)}">
+
+      <div class="klima-body">
+        <div class="klima-title">${esc(k.naziv)}</div>
+        <div class="klima-desc">${esc(k.brand)} • ${esc(k.btu)} • ${formatNamjena(k.namjena)}</div>
+
+        <div class="price-row">
+          <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
+          ${hasDiscount ? `<span class="klima-old">${esc(k.staraCijena)} KM</span>` : ""}
+        </div>
+
+        <a class="btn-call" href="tel:+38766813039">Pozovi</a>
+      </div>
+    </article>
+  `;
+}
+  
     return `
       <article class="klima-card">
         ${k.featured ? `<div class="klima-badge top">Top ponuda</div>` : ""}
