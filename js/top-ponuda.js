@@ -37,7 +37,7 @@ grid.innerHTML = featured.map(k => {
 }).join("");
 
 
-  function formatCijena(n){
+  function formatCijena(n){ return `${Number(n)} KM sa ugradnjom`; }
     const num = Number(n);
     if (!Number.isFinite(num)) return "";
     return `${num} KM sa ugradnjom`;
