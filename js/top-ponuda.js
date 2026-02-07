@@ -9,43 +9,44 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // prvih 4 featured:true (bez dopunjavanja)
   const featured = data.filter(k => k.featured === true).slice(0, 4);
 
-grid.innerHTML = featured.map(k => {
-  const hasDiscount = k.popust && k.staraCijena;
+  grid.innerHTML = featured.map(k => {
+    const hasDiscount = k.popust && k.staraCijena;
+    return `
+      <article class="klima-card">
+        ${hasDiscount ? `<div class="klima-badge">${k.popust}</div>` : ""}
 
-  return `
-    <article class="klima-card">
-      ${hasDiscount ? `<div class="klima-badge">${k.popust}</div>` : ""}
+        <img src="${k.slika}" alt="${escapeHtml(k.naziv)}">
 
-      <img src="${k.slika}" alt="${k.naziv}">
+        <div class="klima-body">
+          <div class="klima-title">${escapeHtml(k.naziv)}</div>
+          <div class="klima-desc">${escapeHtml(k.brand)} • ${escapeHtml(k.btu)} • ${formatNamjena(k.namjena)}</div>
 
-      <div class="klima-body">
-        <div class="klima-title">${k.naziv}</div>
-        <div class="klima-desc">${k.brand} • ${k.btu} • ${formatNamjena(k.namjena)}</div>
+          <div class="price-row">
+            <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
+            ${hasDiscount ? `<span class="klima-old">${Number(k.staraCijena)} KM</span>` : ""}
+          </div>
 
-        <div class="price-row">
-          <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
-          ${hasDiscount ? `<span class="klima-old">${k.staraCijena} KM</span>` : ""}
+          <a class="btn-call" href="tel:+38766813039">Pozovi</a>
         </div>
+      </article>
+    `;
+  }).join("");
 
-        <a class="btn-call" href="tel:+38766813039">Pozovi</a>
-      </div>
-    </article>
-  `;
-}).join("");
-
-
-  function formatCijena(n){ return `${Number(n)} KM sa ugradnjom`; }
+  function formatCijena(n){
     const num = Number(n);
-    if (!Number.isFinite(num)) return "";
-    return `${num} KM sa ugradnjom`;
+    return Number.isFinite(num) ? `${num} KM sa ugradnjom` : "";
   }
-
   function formatNamjena(arr){
     const map = { hladjenje:"Hlađenje", dogrijavanje:"Dogrijavanje", grijanje:"Grijanje" };
     if (!Array.isArray(arr)) return "";
     return arr.map(x => map[x] || x).join(", ");
   }
+  function escapeHtml(s){
+    return String(s ?? "").replace(/[&<>"']/g, m => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+  }
 });
+
