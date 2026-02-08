@@ -26,10 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="price-row">
             <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
             ${hasDiscount ? `<span class="klima-old">${Number(k.staraCijena)} KM</span>` : ""}
-          </div>
-
-          <a class="btn-call" href="tel:+38766813039">Pozovi</a>
-        </div>
+         <div class="btn-row">
+  <a class="btn-call" href="tel:+38766813039">Pozovi</a>
+  <a class="btn-upit" href="${upitLink(k.naziv)}" target="_blank" rel="noopener">Pošalji upit</a>
+</div>
+ 
       </article>
     `;
   }).join("");
