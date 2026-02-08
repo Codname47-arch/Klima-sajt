@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Prvih 4 featured:true
   const featured = data.filter(k => k.featured === true).slice(0, 4);
 
   grid.innerHTML = featured.map(k => {
@@ -17,13 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return `
       <article class="klima-card">
-        ${hasDiscount ? `<div class="klima-badge">${escapeHtml(k.popust)}</div>` : ""}
+        ${hasDiscount ? `<div class="klima-badge">${esc(k.popust)}</div>` : ""}
 
-        <img src="${escapeHtml(k.slika)}" alt="${escapeHtml(k.naziv)}">
+        <img src="${esc(k.slika)}" alt="${esc(k.naziv)}">
 
         <div class="klima-body">
-          <div class="klima-title">${escapeHtml(k.naziv)}</div>
-          <div class="klima-desc">${escapeHtml(k.brand)} • ${escapeHtml(k.btu)} • ${formatNamjena(k.namjena)}</div>
+          <div class="klima-title">${esc(k.naziv)}</div>
+          <div class="klima-desc">${esc(k.brand)} • ${esc(k.btu)} • ${formatNamjena(k.namjena)}</div>
 
           <div class="price-row">
             <span class="klima-price">${formatCijena(k.cijenaSaUgradnjom)}</span>
@@ -39,32 +38,26 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }).join("");
 
-  // ===== HELPERS =====
-  function formatCijena(n) {
+  function formatCijena(n){
     const num = Number(n);
     return Number.isFinite(num) ? `${num} KM sa ugradnjom` : "";
   }
 
-  function formatNamjena(arr) {
-    const map = { hladjenje: "Hlađenje", dogrijavanje: "Dogrijavanje", grijanje: "Grijanje" };
+  function formatNamjena(arr){
+    const map = { hladjenje:"Hlađenje", dogrijavanje:"Dogrijavanje", grijanje:"Grijanje" };
     if (!Array.isArray(arr)) return "";
     return arr.map(x => map[x] || x).join(", ");
   }
 
-  function upitLink(naziv) {
-    const base =
-      "https://docs.google.com/forms/d/e/1FAIpQLSeYhW-w2lr-nJ1a4mb3dOPZGwYKs4FWG1p7E_1m_r0HXNr3_Q/viewform?usp=pp_url";
+  function upitLink(naziv){
+    const base = "https://docs.google.com/forms/d/e/1FAIpQLSeYhW-w2lr-nJ1a4mb3dOPZGwYKs4FWG1p7E_1m_r0HXNr3_Q/viewform?usp=pp_url";
     const entry = "&entry.772952950=" + encodeURIComponent(naziv);
     return base + entry;
   }
 
-  function escapeHtml(s) {
-    return String(s ?? "").replace(/[&<>"']/g, m => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
+  function esc(str){
+    return String(str ?? "").replace(/[&<>"']/g, (m) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[m]));
   }
 });
