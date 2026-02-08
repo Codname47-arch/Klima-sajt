@@ -1,103 +1,101 @@
-body { outline: 6px solid red !important; }
-/* RESET */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  background: #f2f3f5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+/* ===============================
+   RESET + OSNOVE
+================================ */
+*,
+*::before,
+*::after{
+  box-sizing: border-box;
 }
-* { box-sizing: border-box; }
 
-/* Smooth scroll */
-html { scroll-behavior: smooth; }
+html,body{
+  margin:0;
+  padding:0;
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:#f4f6f8;
+  color:#111;
+}
 
-body { padding-top: 64px; }
+img{
+  max-width:100%;
+  display:block;
+}
 
-/* HEADER */
+/* ===============================
+   VARIJABLE
+================================ */
+:root{
+  --green:#18a957;
+  --green-dark:#14924b;
+  --radius:18px;
+}
+
+/* ===============================
+   NAVBAR (sticky)
+================================ */
 .nav{
-  position: fixed;
-  top:0; left:0; right:0;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
   height:64px;
-  padding: 0 14px;
+  background:#fff;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  background:#f2f3f5;
-  border-bottom:1px solid rgba(0,0,0,0.08);
-  z-index:9999;
+  padding:0 14px;
+  z-index:999;
+  border-bottom:1px solid rgba(0,0,0,.08);
 }
-.nav-logo img { height:32px; display:block; }
+
+.nav-logo img{
+  height:32px;
+}
 
 .nav-btn{
-  width:40px; height:40px;
+  width:40px;
+  height:40px;
   border-radius:12px;
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.10);
+  border:1px solid rgba(0,0,0,.15);
+  background:#f2f3f5;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:4px;
-  cursor:pointer;
-}
-.nav-btn span{
-  width:18px; height:2px;
-  background:#111;
-  border-radius:99px;
 }
 
-.nav-menu{
-  position: fixed;
-  top: 70px;
-  right: 14px;
-  width: min(320px, calc(100vw - 28px));
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.15);
-  padding: 10px;
-  display:none;
-  z-index:10000;
-}
-.nav-menu.open{ display:block; }
-.nav-menu a{
-  display:block;
-  padding: 12px 14px;
-  text-decoration:none;
-  color:#111;
-  font-weight:700;
+.nav-btn span{
+  width:18px;
+  height:2px;
+  background:#111;
   border-radius:10px;
 }
-.nav-menu a:active{ background:#f2f3f5; }
-.menu-divider{
-  height:1px;
-  background: rgba(0,0,0,0.08);
-  margin: 8px 6px;
+
+body{
+  padding-top:64px;
 }
 
-/* HERO + SLIDER */
+/* ===============================
+   HERO
+================================ */
 .hero{
-  position: relative;
-  width:100%;
+  position:relative;
   height:70vh;
-  min-height:480px;
+  min-height:460px;
   overflow:hidden;
 }
-.slides-track{ display:flex; height:100%; }
+
 .slide{
-  flex: 0 0 100%;
-  height:100%;
-  position:relative;
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
 }
+
 .overlay{
   position:absolute;
   inset:0;
-  background: rgba(0,0,0,0.45);
-  pointer-events:none;
+  background:rgba(0,0,0,.45);
 }
+
 .hero-content{
   position:absolute;
   inset:0;
@@ -106,573 +104,188 @@ body { padding-top: 64px; }
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
   color:#fff;
-  padding: 0 16px;
+  text-align:center;
+  padding:16px;
 }
-.hero-content h1{ margin:0 0 10px; font-size:32px; }
-.hero-content p{ margin:0 0 20px; font-size:16px; opacity:.9; }
+
 .hero-btn{
+  margin-top:20px;
   background:#fff;
-  color:#0057ff;
-  text-decoration:none;
-  font-weight:800;
-  padding: 14px 26px;
+  color:#000;
+  padding:14px 26px;
   border-radius:999px;
+  font-weight:800;
+  text-decoration:none;
 }
-.hero-dots{
-  position:absolute;
-  bottom:16px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:8px;
-  z-index:5;
-}
-.dot{
-  width:10px; height:10px;
-  border-radius:50%;
-  background: rgba(255,255,255,0.4);
-}
-.dot.active{ background:#fff; }
 
-/* Containers & Titles */
-.container{ max-width:1100px; margin:0 auto; padding: 0 16px; }
-.section-title{ font-size:28px; margin: 0 0 24px; text-align:center; }
-
-/* Sections */
-.sekcija{
-  padding: 60px 16px;
-  background:#fff;
-}
-.sekcija h2{ margin:0 0 10px; font-size:26px; }
-.sekcija p{ margin:0; color:#666; font-size:15px; }
-
-/* TOP PONUDA */
-.top-ponuda{ background:#fff; padding:70px 0; }
-
+/* ===============================
+   GRID ZA KLIME
+================================ */
 .klime-grid{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+  padding:30px 16px;
 }
-.klime-grid.all{ display:grid; }
 
+/* ===============================
+   KARTICA KLIME
+================================ */
 .klima-card{
-  position:relative;
-  background:#f9fafb;
-  border-radius:18px;
+  background:#fff;
+  border-radius:var(--radius);
   overflow:hidden;
-  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
   display:flex;
   flex-direction:column;
+  position:relative;
 }
+
+/* ===== SLIKA (VELIKA) ===== */
 .klima-card img{
   width:100%;
-  height:180px;
-  object-fit:cover;
-  display:block;
+  height:460px;
+  object-fit:contain;
+  background:#f7f8fa;
+  padding:6px;
 }
+
+/* ===== BADGE POPUST ===== */
+.klima-badge{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:14px;
+  z-index:5;
+}
+
+/* ===== TEKST ===== */
 .klima-body{
-  padding:18px;
+  padding:16px;
   display:flex;
   flex-direction:column;
   gap:10px;
 }
-.klima-title{ font-size:18px; font-weight:900; }
-.klima-desc{ font-size:14px; color:#555; }
 
+.klima-title{
+  font-size:18px;
+  font-weight:900;
+}
+
+.klima-desc{
+  font-size:14px;
+  color:#666;
+}
+
+/* ===== CIJENE ===== */
 .price-row{
   display:flex;
   align-items:baseline;
   gap:10px;
 }
+
 .klima-price{
+  color:var(--green);
+  font-weight:900;
+  font-size:20px;
+}
+
+.klima-old{
+  color:var(--green);
+  opacity:.55;
+  font-weight:900;
+  text-decoration:line-through;
+}
+
+/* ===============================
+   DUGMAD (ISTA VELIČINA)
+================================ */
+.btn-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px;
+}
+
+.btn-call,
+.btn-upit{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--green);
+  color:#fff;
   font-weight:900;
   font-size:16px;
-  color:#d10000;
-}
-.klima-old{
-  font-size:14px;
-  color:#999;
-  text-decoration:line-through;
-  font-weight:800;
-}
-
-.klima-badge{
-  position:absolute;
-  top:12px;
-  left:12px;
-  background:#d10000;
-  color:#fff;
-  font-weight:900;
-  font-size:12px;
-  padding: 8px 10px;
-  border-radius:10px;
-  z-index:10;
-  pointer-events:none;
-}
-
-.btn-call{
-  margin-top:auto;
-  text-align:center;
-  padding:12px;
-  border-radius:999px;
-  background:#0057ff;
-  color:#fff;
-  font-weight:900;
-  text-decoration:none;
-}
-
-/* CTA buttons */
-.section-cta{ text-align:center; margin-top:35px; }
-.btn-outline{
-  padding:14px 26px;
-  border-radius:999px;
-  border:2px solid #0057ff;
-  color:#0057ff;
-  text-decoration:none;
-  font-weight:900;
-  display:inline-block;
-}
-.btn-primary{
-  padding:14px 26px;
-  border-radius:999px;
-  background:#0057ff;
-  color:#fff;
-  text-decoration:none;
-  font-weight:900;
-  display:inline-block;
-}
-
-/* klime.html UI */
-.page{ background:#fff; }
-.klime-hero{ padding:30px 0 10px; background:#f2f3f5; }
-.page-title{ margin:0; font-size:30px; }
-.page-sub{ margin:10px 0 0; color:#555; }
-.klime-wrap{ padding:24px 0 40px; background:#fff; }
-
-.filters{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap:12px;
-  align-items:end;
-  margin-bottom:14px;
-}
-.filter label{
-  display:block;
-  font-size:12px;
-  color:#666;
-  margin-bottom:6px;
-  font-weight:900;
-}
-.filter select{
-  width:100%;
-  padding:12px 12px;
-  border-radius:12px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:#fff;
-}
-.btn-clear{
-  padding:12px 14px;
-  border-radius:12px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:#f2f3f5;
-  font-weight:900;
-  cursor:pointer;
-}
-@media (max-width: 860px){
-  .filters{ grid-template-columns: 1fr 1fr; }
-}
-
-.chips{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin:10px 0 18px;
-}
-.chip{
-  border:1px solid rgba(0,0,0,0.12);
-  background:#fff;
-  border-radius:999px;
-  padding:10px 12px;
-  font-weight:900;
-  cursor:pointer;
-}
-.chip .x{ margin-left:6px; opacity:.7; }
-
-.empty{
-  padding:24px;
-  border:1px dashed rgba(0,0,0,0.2);
-  border-radius:16px;
-  text-align:center;
-  color:#555;
-}
-.empty-title{ font-weight:900; margin-bottom:6px; color:#111; }
-
-/* CTA block + FAQ */
-.cta-block{ background:#f2f3f5; padding:40px 0; }
-.cta-inner{
-  display:flex;
-  justify-content:space-between;
-  gap:16px;
-  align-items:center;
-  background:#fff;
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:18px;
-  padding:22px;
-  box-shadow:0 10px 26px rgba(0,0,0,0.08);
-}
-.cta-actions{ display:flex; gap:10px; }
-@media (max-width:760px){
-  .cta-inner{ flex-direction:column; align-items:flex-start; }
-}
-
-.faq{ padding:50px 0 80px; background:#fff; }
-.faq-item{
-  border:1px solid rgba(0,0,0,0.10);
-  border-radius:14px;
-  padding:12px 14px;
-  margin:12px 0;
-}
-.faq-item summary{ cursor:pointer; font-weight:900; }
-.faq-item p{ color:#555; margin:10px 0 0; }
-
-/* Sticky mobile bar */
-.mobile-bar{
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  display:none;
-  gap:10px;
-  padding: 10px;
-  background: rgba(242,243,245,0.95);
-  border-top: 1px solid rgba(0,0,0,0.08);
-  z-index: 9999;
-}
-.mb-btn{
-  flex:1;
-  text-align:center;
-  text-decoration:none;
   padding:12px 10px;
   border-radius:14px;
-  background:#fff;
-  border:1px solid rgba(0,0,0,0.10);
-  font-weight:900;
-  color:#111;
-}
-.mb-primary{
-  background:#0057ff;
-  color:#fff;
-  border-color:#0057ff;
-}
-@media (max-width: 760px){
-  .mobile-bar{ display:flex; }
+  text-decoration:none;
 }
 
-/* Mobile look (webshop lista) */
-@media (max-width: 760px){
-  .klime-grid{ grid-template-columns: 1fr; gap: 14px; }
-
-  .klima-card{
-    display:flex;
-    flex-direction:row;
-    align-items:stretch;
-    background:#fff;
-    border:1px solid rgba(0,0,0,0.08);
-    box-shadow:0 8px 22px rgba(0,0,0,0.06);
-  }
-  .klima-card img{
-    width:120px;
-    height:120px;
-    object-fit:contain;
-    background:#f7f8fa;
-    padding:8px;
-    flex: 0 0 120px;
-  }
-  .klima-body{ padding:14px; gap:6px; width:100%; }
-  .klima-title{ font-size:15px; }
-  .klima-desc{ font-size:13px; color:#666; }
-  .btn-call{ margin-top:10px; font-size:14px; }
+.btn-call:active,
+.btn-upit:active{
+  background:var(--green-dark);
 }
 
-/* ===== ZELENA AKCIJA (SVUDA) ===== */
-:root{
-  --akcija: #18a957; /* zeleno */
-}
-
-.klima-badge{
-  background: var(--akcija) !important;
-  color:#fff;
-}
-
-.klima-old{
-  color: var(--akcija);
-  opacity: .65;
-  text-decoration: line-through;
-  font-weight: 900;
-}
-
-.klima-price{
-  color: var(--akcija);
-  font-weight: 900;
-}
-
-/* ===== DUGMAD PORED POZOVI ===== */
-.btn-row{
-  display:flex;
-  gap:10px;
-  margin-top: 10px;
-}
-
-.btn-call, .btn-upit{
-  flex:1;
-  text-align:center;
-  padding:12px;
+/* ===============================
+   FILTERI / CHIPOVI
+================================ */
+.chip{
+  background:#e8f6ee;
+  color:#0d7a3c;
+  border:none;
+  padding:8px 12px;
   border-radius:999px;
+  font-weight:700;
+  margin:4px;
+}
+
+/* ===============================
+   MOBILE BAR
+================================ */
+.mobile-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:1px solid rgba(0,0,0,.1);
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+  padding:8px;
+  z-index:999;
+}
+
+.mobile-bar a{
+  text-align:center;
+  padding:12px 8px;
+  border-radius:14px;
   font-weight:900;
   text-decoration:none;
-  display:block;
 }
 
-.btn-call{
-  background:#111;
+.mobile-bar a:nth-child(1),
+.mobile-bar a:nth-child(2){
+  background:#f2f3f5;
+  color:#000;
+}
+
+.mobile-bar a:nth-child(3){
+  background:#005eff;
   color:#fff;
 }
 
-.btn-upit{
-  background: var(--akcija);
-  color:#fff;
-}
-
-/* ===== TELEFON: VELIKA KARTICA KAO NA PRIMJERU ===== */
-@media (max-width: 760px){
-  .klime-grid{
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .klima-card{
-    background:#fff;
-    border: 1px solid rgba(0,0,0,0.10);
-    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
-    border-radius: 18px;
-    overflow:hidden;
-  }
-
+/* ===============================
+   RESPONSIVE
+================================ */
+@media(max-width:768px){
   .klima-card img{
-    width:100%;
-    height: 280px;     /* ⬅️ VELIKA SLIKA */
-    object-fit: contain;
-    background: #f6f7f9;
-    padding: 18px;
-    display:block;
-  }
-
-  .klima-body{
-    padding: 16px;
-    gap: 8px;
-  }
-
-  .klima-title{
-    font-size: 18px;
-    font-weight: 900;
-  }
-
-  .price-row{
-    display:flex;
-    gap: 10px;
-    align-items: baseline;
-  }
-
-  .klima-badge{
-    top: 14px;
-    left: 14px;
-    padding: 10px 12px;
-    border-radius: 12px;
-    font-size: 13px;
-    font-weight: 900;
+    height:520px;
   }
 }
-/* ======== KLIME KARTICE (KAO NA SLICI) ======== */
-:root{
-  --akcija: #18a957; /* zelena */
-}
-
-.klime-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-}
-
-.klima-card{
-  position: relative;
-  background:#fff;
-  border: 1px solid rgba(0,0,0,0.10);
-  border-radius: 18px;
-  overflow:hidden;
-  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
-  display:flex;
-  flex-direction: column; /* ⬅️ slika gore, tekst dole */
-}
-
-.klima-card img{
-  width: 100%;
-  height: 320px;         /* ⬅️ VELIKA SLIKA */
-  object-fit: contain;   /* kao webshop */
-  background:#f6f7f9;
-  padding: 18px;
-  display:block;
-}
-
-.klima-body{
-  padding: 16px;
-  display:flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.klima-title{
-  font-size: 18px;
-  font-weight: 900;
-  color:#111;
-  line-height: 1.25;
-}
-
-.klima-desc{
-  font-size: 14px;
-  color:#666;
-}
-
-/* badge popusta gore lijevo */
-.klima-badge{
-  position:absolute;
-  top: 14px;
-  left: 14px;
-  background: var(--akcija);
-  color:#fff;
-  font-weight: 900;
-  font-size: 13px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  z-index: 10;
-  pointer-events:none;
-}
-
-/* cijene */
-.price-row{
-  display:flex;
-  gap: 10px;
-  align-items: baseline;
-}
-
-.klima-price{
-  color: var(--akcija);
-  font-weight: 900;
-  font-size: 18px;
-}
-
-.klima-old{
-  color: var(--akcija);
-  opacity: .55;
-  font-weight: 900;
-  text-decoration: line-through;
-}
-
-/* dugmad ISTA veličina, ISTA boja */
-.btn-row{
-  display:flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.btn-call,
-.btn-upit{
-  flex: 1;
-  text-align:center;
-  padding: 14px 12px;
-  border-radius: 14px;
-  font-weight: 900;
-  text-decoration:none;
-  display:block;
-  background: var(--akcija);
-  color:#fff;
-  border: 0;
-}
-
-/* hover samo na desktop */
-@media (hover:hover){
-  .btn-call:hover,
-  .btn-upit:hover{
-    filter: brightness(0.95);
-  }
-}
-
-/* telefon: još malo veće */
-@media (max-width: 760px){
-  .klime-grid{
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .klima-card img{
-    height: 360px;
-  }
-}
-/* ===== FIX: dugmad ista sirina/visina, malo manja ===== */
-.btn-row{
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important; /* ⬅️ uvijek 50/50 */
-  gap: 10px !important;
-  margin-top: 10px !important;
-}
-
-.btn-call,
-.btn-upit{
-  width: 100% !important;
-  min-width: 0 !important;
-  padding: 12px 10px !important;   /* ⬅️ nijansu manje */
-  border-radius: 14px !important;
-  font-weight: 900 !important;
-  font-size: 16px !important;      /* po potrebi 15px */
-  text-align: center !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important; /* ⬅️ tekst centar */
-  background: var(--akcija, #18a957) !important;
-  color: #fff !important;
-}
-
-/* ===== FIX: veca slika kao webshop primjer ===== */
-.klima-card img{
-  height: 440px !important;     /* ⬅️ povecaj sliku (probaj 420–480) */
-  object-fit: contain !important;
-  background: #f6f7f9 !important;
-
-  padding: 6px !important;      /* ⬅️ skoro bez paddinga da slika bude veca */
-  width: 100% !important;
-  display: block !important;
-}
-
-/* telefon: jos malo veca */
-@media (max-width: 760px){
-  .klima-card img{
-    height: 480px !important;   /* ⬅️ baš “ogromno” kao na primjeru */
-  }
-}
-.klima-badge{
-  background: var(--akcija, #18a957) !important;
-  color:#fff !important;
-}
-
-.klima-price{
-  color: var(--akcija, #18a957) !important;
-  font-weight: 900 !important;
-}
-
-.klima-old{
-  color: var(--akcija, #18a957) !important;
-  opacity: .55 !important;
-  text-decoration: line-through !important;
-  font-weight: 900 !important;
-}
-
-
