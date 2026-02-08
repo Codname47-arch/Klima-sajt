@@ -616,5 +616,62 @@ body { padding-top: 64px; }
     height: 360px;
   }
 }
+/* ===== FIX: dugmad ista sirina/visina, malo manja ===== */
+.btn-row{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important; /* ⬅️ uvijek 50/50 */
+  gap: 10px !important;
+  margin-top: 10px !important;
+}
+
+.btn-call,
+.btn-upit{
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 12px 10px !important;   /* ⬅️ nijansu manje */
+  border-radius: 14px !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;      /* po potrebi 15px */
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; /* ⬅️ tekst centar */
+  background: var(--akcija, #18a957) !important;
+  color: #fff !important;
+}
+
+/* ===== FIX: veca slika kao webshop primjer ===== */
+.klima-card img{
+  height: 440px !important;     /* ⬅️ povecaj sliku (probaj 420–480) */
+  object-fit: contain !important;
+  background: #f6f7f9 !important;
+
+  padding: 6px !important;      /* ⬅️ skoro bez paddinga da slika bude veca */
+  width: 100% !important;
+  display: block !important;
+}
+
+/* telefon: jos malo veca */
+@media (max-width: 760px){
+  .klima-card img{
+    height: 480px !important;   /* ⬅️ baš “ogromno” kao na primjeru */
+  }
+}
+.klima-badge{
+  background: var(--akcija, #18a957) !important;
+  color:#fff !important;
+}
+
+.klima-price{
+  color: var(--akcija, #18a957) !important;
+  font-weight: 900 !important;
+}
+
+.klima-old{
+  color: var(--akcija, #18a957) !important;
+  opacity: .55 !important;
+  text-decoration: line-through !important;
+  font-weight: 900 !important;
+}
 
 
