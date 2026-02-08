@@ -12,92 +12,64 @@ document.addEventListener("DOMContentLoaded", () => {
   const data = window.KLIME;
 
   if (!grid || !chipsWrap || !selBtu || !selBrand || !selNamjena || !selSort || !btnClear) {
-    console.error("❌ Nedostaju elementi na klime.html (provjeri ID-jeve).");
+    console.error("❌ Nedostaje neki element na klime.html (provjeri ID-jeve).");
     return;
   }
-
   if (!Array.isArray(data)) {
-    console.error("❌ KLIME nije učitan. Provjeri da li se data/klime.js učitava prije klime-page.js");
+    console.error("❌ KLIME nije učitan. Provjeri data/klime.js");
     return;
   }
 
-  // Popuni brand dropdown iz podataka
+  // brendovi
   const brands = Array.from(new Set(data.map(x => x.brand).filter(Boolean))).sort();
   selBrand.innerHTML = `<option value="">Svi</option>` + brands.map(b => `<option value="${esc(b)}">${esc(b)}</option>`).join("");
 
-  const state = {
-    btu: "",
-    brand: "",
-    namjena: "",
-    sort: "popularnost"
-  };
+  const state = { btu:"", brand:"", namjena:"", sort:"popularnost" };
 
-  // ===== EVENTS =====
   [selBtu, selBrand, selNamjena, selSort].forEach(el => {
-    el.addEventListener("change", () => {
-      syncStateFromUI();
-      render();
-    });
+    el.addEventListener("change", () => { sync(); render(); });
   });
 
   btnClear.addEventListener("click", () => {
-    state.btu = "";
-    state.brand = "";
-    state.namjena = "";
-    state.sort = "popularnost";
-
-    selBtu.value = "";
-    selBrand.value = "";
-    selNamjena.value = "";
-    selSort.value = "popularnost";
-
+    state.btu = ""; state.brand = ""; state.namjena = ""; state.sort = "popularnost";
+    selBtu.value = ""; selBrand.value = ""; selNamjena.value = ""; selSort.value = "popularnost";
     render();
   });
 
   chipsWrap.addEventListener("click", (e) => {
-    const chipBtn = e.target.closest("[data-chip]");
-    if (!chipBtn) return;
-
-    const key = chipBtn.dataset.chip;
+    const btn = e.target.closest("[data-chip]");
+    if (!btn) return;
+    const key = btn.dataset.chip;
     state[key] = "";
-
     if (key === "btu") selBtu.value = "";
     if (key === "brand") selBrand.value = "";
     if (key === "namjena") selNamjena.value = "";
-
     render();
   });
 
-  function syncStateFromUI() {
+  function sync(){
     state.btu = selBtu.value;
     state.brand = selBrand.value;
     state.namjena = selNamjena.value;
     state.sort = selSort.value;
   }
 
-  // ===== RENDER =====
-  function render() {
+  function render(){
     chipsWrap.innerHTML = makeChips(state);
 
     let out = data.slice();
-
     if (state.btu) out = out.filter(x => x.btu === state.btu);
     if (state.brand) out = out.filter(x => x.brand === state.brand);
     if (state.namjena) out = out.filter(x => Array.isArray(x.namjena) && x.namjena.includes(state.namjena));
 
-    // Sortiranje
-    if (state.sort === "popularnost") {
-      out.sort((a, b) => (b.popularnost || 0) - (a.popularnost || 0));
-    } else if (state.sort === "cijenaAsc") {
-      out.sort((a, b) => (a.cijenaSaUgradnjom || 0) - (b.cijenaSaUgradnjom || 0));
-    } else if (state.sort === "cijenaDesc") {
-      out.sort((a, b) => (b.cijenaSaUgradnjom || 0) - (a.cijenaSaUgradnjom || 0));
-    }
+    if (state.sort === "popularnost") out.sort((a,b) => (b.popularnost||0) - (a.popularnost||0));
+    if (state.sort === "cijenaAsc") out.sort((a,b) => (a.cijenaSaUgradnjom||0) - (b.cijenaSaUgradnjom||0));
+    if (state.sort === "cijenaDesc") out.sort((a,b) => (b.cijenaSaUgradnjom||0) - (a.cijenaSaUgradnjom||0));
 
     grid.innerHTML = out.map(k => cardHTML(k)).join("") || emptyHTML();
   }
 
-  function cardHTML(k) {
+  function cardHTML(k){
     const hasDiscount = Boolean(k.popust) && Number.isFinite(Number(k.staraCijena));
 
     return `
@@ -124,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  function emptyHTML() {
+  function emptyHTML(){
     return `
       <div class="empty">
         <div class="empty-title">Nema rezultata</div>
@@ -133,8 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  // ===== CHIPS =====
-  function makeChips(s) {
+  function makeChips(s){
     const chips = [];
     if (s.btu) chips.push(chip("btu", s.btu));
     if (s.brand) chips.push(chip("brand", s.brand));
@@ -142,44 +113,38 @@ document.addEventListener("DOMContentLoaded", () => {
     return chips.join("");
   }
 
-  function chip(key, label) {
+  function chip(key, label){
     return `<button class="chip" type="button" data-chip="${key}">${esc(label)} <span class="x">×</span></button>`;
   }
 
-  // ===== HELPERS =====
-  function formatCijena(n) {
+  function formatCijena(n){
     const num = Number(n);
     return Number.isFinite(num) ? `${num} KM sa ugradnjom` : "";
   }
 
-  function mapNamjena(x) {
-    const map = { hladjenje: "Hlađenje", dogrijavanje: "Dogrijavanje", grijanje: "Grijanje" };
+  function mapNamjena(x){
+    const map = { hladjenje:"Hlađenje", dogrijavanje:"Dogrijavanje", grijanje:"Grijanje" };
     return map[x] || x;
   }
 
-  function formatNamjena(arr) {
+  function formatNamjena(arr){
     if (!Array.isArray(arr)) return "";
     return arr.map(mapNamjena).join(", ");
   }
 
-  function upitLink(naziv) {
-    const base =
-      "https://docs.google.com/forms/d/e/1FAIpQLSeYhW-w2lr-nJ1a4mb3dOPZGwYKs4FWG1p7E_1m_r0HXNr3_Q/viewform?usp=pp_url";
+  function upitLink(naziv){
+    const base = "https://docs.google.com/forms/d/e/1FAIpQLSeYhW-w2lr-nJ1a4mb3dOPZGwYKs4FWG1p7E_1m_r0HXNr3_Q/viewform?usp=pp_url";
     const entry = "&entry.772952950=" + encodeURIComponent(naziv);
     return base + entry;
   }
 
-  function esc(str) {
+  function esc(str){
     return String(str ?? "").replace(/[&<>"']/g, (m) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;"
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
     }[m]));
   }
 
-  // INIT
-  syncStateFromUI();
+  // init
+  sync();
   render();
 });
