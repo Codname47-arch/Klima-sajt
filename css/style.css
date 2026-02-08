@@ -659,5 +659,31 @@ html { scroll-behavior: smooth; }
 .btn-outline-green:active{
   transform: scale(0.97);
 }
+/* ===== ZELENO PUNO CTA DUGME (svuda isto) ===== */
+.btn-green{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 12px 18px;
+  min-height: 46px;
+
+  border-radius: 14px;
+  background: #18a957;
+  color: #fff;
+
+  font-weight: 900;
+  font-size: 15px;
+  text-decoration:none;
+  border: 0;
+
+  transition: filter .2s ease, transform .05s ease;
+}
+
+@media (hover:hover){
+  .btn-green:hover{ filter: brightness(0.95); }
+}
+.btn-green:active{ transform: scale(0.97); }
+
 
 
