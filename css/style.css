@@ -492,4 +492,129 @@ body { padding-top: 64px; }
     font-weight: 900;
   }
 }
+/* ======== KLIME KARTICE (KAO NA SLICI) ======== */
+:root{
+  --akcija: #18a957; /* zelena */
+}
+
+.klime-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.klima-card{
+  position: relative;
+  background:#fff;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 18px;
+  overflow:hidden;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+  display:flex;
+  flex-direction: column; /* ⬅️ slika gore, tekst dole */
+}
+
+.klima-card img{
+  width: 100%;
+  height: 320px;         /* ⬅️ VELIKA SLIKA */
+  object-fit: contain;   /* kao webshop */
+  background:#f6f7f9;
+  padding: 18px;
+  display:block;
+}
+
+.klima-body{
+  padding: 16px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.klima-title{
+  font-size: 18px;
+  font-weight: 900;
+  color:#111;
+  line-height: 1.25;
+}
+
+.klima-desc{
+  font-size: 14px;
+  color:#666;
+}
+
+/* badge popusta gore lijevo */
+.klima-badge{
+  position:absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--akcija);
+  color:#fff;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  z-index: 10;
+  pointer-events:none;
+}
+
+/* cijene */
+.price-row{
+  display:flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.klima-price{
+  color: var(--akcija);
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.klima-old{
+  color: var(--akcija);
+  opacity: .55;
+  font-weight: 900;
+  text-decoration: line-through;
+}
+
+/* dugmad ISTA veličina, ISTA boja */
+.btn-row{
+  display:flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-call,
+.btn-upit{
+  flex: 1;
+  text-align:center;
+  padding: 14px 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  text-decoration:none;
+  display:block;
+  background: var(--akcija);
+  color:#fff;
+  border: 0;
+}
+
+/* hover samo na desktop */
+@media (hover:hover){
+  .btn-call:hover,
+  .btn-upit:hover{
+    filter: brightness(0.95);
+  }
+}
+
+/* telefon: još malo veće */
+@media (max-width: 760px){
+  .klime-grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .klima-card img{
+    height: 360px;
+  }
+}
+
 
