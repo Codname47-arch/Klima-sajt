@@ -393,3 +393,103 @@ body { padding-top: 64px; }
   .klima-desc{ font-size:13px; color:#666; }
   .btn-call{ margin-top:10px; font-size:14px; }
 }
+
+/* ===== ZELENA AKCIJA (SVUDA) ===== */
+:root{
+  --akcija: #18a957; /* zeleno */
+}
+
+.klima-badge{
+  background: var(--akcija) !important;
+  color:#fff;
+}
+
+.klima-old{
+  color: var(--akcija);
+  opacity: .65;
+  text-decoration: line-through;
+  font-weight: 900;
+}
+
+.klima-price{
+  color: var(--akcija);
+  font-weight: 900;
+}
+
+/* ===== DUGMAD PORED POZOVI ===== */
+.btn-row{
+  display:flex;
+  gap:10px;
+  margin-top: 10px;
+}
+
+.btn-call, .btn-upit{
+  flex:1;
+  text-align:center;
+  padding:12px;
+  border-radius:999px;
+  font-weight:900;
+  text-decoration:none;
+  display:block;
+}
+
+.btn-call{
+  background:#111;
+  color:#fff;
+}
+
+.btn-upit{
+  background: var(--akcija);
+  color:#fff;
+}
+
+/* ===== TELEFON: VELIKA KARTICA KAO NA PRIMJERU ===== */
+@media (max-width: 760px){
+  .klime-grid{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .klima-card{
+    background:#fff;
+    border: 1px solid rgba(0,0,0,0.10);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.06);
+    border-radius: 18px;
+    overflow:hidden;
+  }
+
+  .klima-card img{
+    width:100%;
+    height: 280px;     /* ⬅️ VELIKA SLIKA */
+    object-fit: contain;
+    background: #f6f7f9;
+    padding: 18px;
+    display:block;
+  }
+
+  .klima-body{
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .klima-title{
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .price-row{
+    display:flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+
+  .klima-badge{
+    top: 14px;
+    left: 14px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 900;
+  }
+}
+
